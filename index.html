@@ -1567,65 +1567,113 @@
       <div class="orb-wrap" aria-hidden="true">
         <svg viewBox="-200 -200 400 400">
           <defs>
-            <radialGradient id="core" cx="0.35" cy="0.35" r="0.7">
-              <stop offset="0%" stop-color="#3a3a3c" />
-              <stop offset="55%" stop-color="#0a0a0c" />
-              <stop offset="100%" stop-color="#000" />
+            <!-- Enhanced Sphere Gradient for better 3D depth -->
+            <radialGradient id="core" cx="0.35" cy="0.3" r="0.65">
+              <stop offset="0%" stop-color="#4a4a4f" />
+              <stop offset="40%" stop-color="#1c1c1e" />
+              <stop offset="80%" stop-color="#050505" />
+              <stop offset="100%" stop-color="#000000" />
             </radialGradient>
+            
+            <radialGradient id="hilite" cx="0.25" cy="0.25" r="0.5">
+              <stop offset="0%" stop-color="rgba(255,255,255,0.4)" />
+              <stop offset="40%" stop-color="rgba(255,255,255,0.1)" />
+              <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+            </radialGradient>
+
+            <radialGradient id="inner-shadow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="70%" stop-color="rgba(0,0,0,0)" />
+              <stop offset="100%" stop-color="rgba(0,0,0,0.9)" />
+            </radialGradient>
+
+            <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0%" stop-color="rgba(41, 151, 255, 0.3)" />
+              <stop offset="100%" stop-color="rgba(41, 151, 255, 0)" />
+            </radialGradient>
+
             <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#06c" stop-opacity="0.6" />
-              <stop offset="100%" stop-color="#2997ff" stop-opacity="0.05" />
+              <stop offset="0%" stop-color="#06c" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#2997ff" stop-opacity="0.1" />
             </linearGradient>
-            <radialGradient id="hilite" cx="0.32" cy="0.28" r="0.6">
-              <stop offset="0%" stop-color="rgba(255,255,255,0.35)" />
-              <stop offset="60%" stop-color="rgba(255,255,255,0)" />
-            </radialGradient>
+
+            <clipPath id="front-clip">
+              <rect x="-200" y="0" width="400" height="200" />
+            </clipPath>
+            <clipPath id="back-clip">
+              <rect x="-200" y="-200" width="400" height="200" />
+            </clipPath>
+            <clipPath id="sphere-clip">
+              <circle cx="0" cy="0" r="135" />
+            </clipPath>
+
+            <!-- Orbit Paths for animateMotion -->
+            <path id="o1" d="M 185,0 A 185,55 0 1,0 -185,0 A 185,55 0 1,0 185,0" />
+            <path id="o2" d="M 170,0 A 170,65 0 1,0 -170,0 A 170,65 0 1,0 170,0" />
+            <path id="o3" d="M 195,0 A 195,40 0 1,0 -195,0 A 195,40 0 1,0 195,0" />
           </defs>
 
-          <!-- back distant rings -->
-          <g class="orb-rotate-rev" opacity="0.55">
-            <ellipse cx="0" cy="0" rx="190" ry="60" fill="none" stroke="url(#ring)" stroke-width="1" />
-            <ellipse cx="0" cy="0" rx="170" ry="42" fill="none" stroke="url(#ring)" stroke-width="0.8" opacity="0.5"
-              transform="rotate(20)" />
+          <!-- Outer glow -->
+          <circle cx="0" cy="0" r="160" fill="url(#glow)" class="orb-pulse" />
+
+          <!-- Back half of orbits -->
+          <g transform="rotate(25)">
+            <g clip-path="url(#back-clip)">
+              <use href="#o1" fill="none" stroke="url(#ring)" stroke-width="1.5" />
+              <circle r="4.5" fill="#2997ff"><animateMotion dur="7s" begin="-3s" repeatCount="indefinite"><mpath href="#o1"/></animateMotion></circle>
+            </g>
+          </g>
+          <g transform="rotate(-35)">
+            <g clip-path="url(#back-clip)">
+              <use href="#o2" fill="none" stroke="url(#ring)" stroke-width="1.2" opacity="0.8" />
+              <circle r="3.5" fill="#00d8ff"><animateMotion dur="5.5s" begin="-1.5s" repeatCount="indefinite"><mpath href="#o2"/></animateMotion></circle>
+            </g>
+          </g>
+          <g transform="rotate(65)">
+            <g clip-path="url(#back-clip)">
+              <use href="#o3" fill="none" stroke="url(#ring)" stroke-width="2" opacity="0.6" />
+              <circle r="5" fill="#06c"><animateMotion dur="9s" begin="-6s" repeatCount="indefinite"><mpath href="#o3"/></animateMotion></circle>
+            </g>
           </g>
 
-          <!-- core sphere -->
-          <circle cx="0" cy="0" r="142" fill="url(#core)" />
-          <circle cx="0" cy="0" r="142" fill="url(#hilite)" />
-
-          <!-- meridian lines (subtle) -->
-          <g stroke="rgba(255,255,255,0.08)" stroke-width="0.6" fill="none">
-            <ellipse cx="0" cy="0" rx="142" ry="40" />
-            <ellipse cx="0" cy="0" rx="142" ry="80" />
-            <ellipse cx="0" cy="0" rx="142" ry="120" />
-            <ellipse cx="0" cy="0" rx="40" ry="142" />
-            <ellipse cx="0" cy="0" rx="80" ry="142" />
-            <ellipse cx="0" cy="0" rx="120" ry="142" />
+          <!-- Core Sphere -->
+          <circle cx="0" cy="0" r="135" fill="url(#core)" />
+          
+          <!-- Animated grid lines on the sphere to give it 3D curvature -->
+          <g stroke="rgba(255,255,255,0.06)" stroke-width="0.8" fill="none" clip-path="url(#sphere-clip)">
+            <g>
+              <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="40s" repeatCount="indefinite" />
+              <ellipse cx="0" cy="0" rx="135" ry="35" />
+              <ellipse cx="0" cy="0" rx="135" ry="75" />
+              <ellipse cx="0" cy="0" rx="135" ry="115" />
+              <ellipse cx="0" cy="0" rx="35" ry="135" />
+              <ellipse cx="0" cy="0" rx="75" ry="135" />
+              <ellipse cx="0" cy="0" rx="115" ry="135" />
+            </g>
           </g>
 
-          <!-- glowing nodes on sphere -->
-          <g fill="#2997ff">
-            <circle cx="-70" cy="-50" r="3.5" class="orb-pulse" />
-            <circle cx="40" cy="-80" r="2.5" class="orb-pulse" style="animation-delay:.6s" />
-            <circle cx="95" cy="20" r="3" class="orb-pulse" style="animation-delay:1.2s" />
-            <circle cx="-30" cy="90" r="3.5" class="orb-pulse" style="animation-delay:.3s" />
-            <circle cx="60" cy="70" r="2.5" class="orb-pulse" style="animation-delay:1.6s" />
-            <circle cx="-110" cy="20" r="2.8" class="orb-pulse" style="animation-delay:.9s" />
-            <circle cx="10" cy="-20" r="2" class="orb-pulse" style="animation-delay:2s" />
-          </g>
+          <!-- Sphere highlights and shadows -->
+          <circle cx="0" cy="0" r="135" fill="url(#inner-shadow)" />
+          <circle cx="0" cy="0" r="135" fill="url(#hilite)" />
+          <ellipse cx="-46" cy="-58" rx="28" ry="12" fill="rgba(255,255,255,0.15)" transform="rotate(-30 -46 -58)" />
 
-          <!-- highlight on top-left -->
-          <ellipse cx="-46" cy="-58" rx="28" ry="12" fill="rgba(255,255,255,0.1)" transform="rotate(-30 -46 -58)" />
-
-          <!-- front orbiting rings -->
-          <g class="orb-rotate" opacity="0.8">
-            <ellipse cx="0" cy="0" rx="178" ry="56" fill="none" stroke="url(#ring)" stroke-width="1.2" />
-            <circle cx="178" cy="0" r="4" fill="#2997ff" />
+          <!-- Front half of orbits -->
+          <g transform="rotate(25)">
+            <g clip-path="url(#front-clip)">
+              <use href="#o1" fill="none" stroke="url(#ring)" stroke-width="1.5" />
+              <circle r="4.5" fill="#2997ff"><animateMotion dur="7s" begin="-3s" repeatCount="indefinite"><mpath href="#o1"/></animateMotion></circle>
+            </g>
           </g>
-          <g class="orb-rotate-rev" opacity="0.7" style="animation-duration:60s">
-            <ellipse cx="0" cy="0" rx="170" ry="80" fill="none" stroke="url(#ring)" stroke-width="0.8"
-              transform="rotate(40)" />
-            <circle cx="-130" cy="62" r="3.5" fill="#06c" />
+          <g transform="rotate(-35)">
+            <g clip-path="url(#front-clip)">
+              <use href="#o2" fill="none" stroke="url(#ring)" stroke-width="1.2" opacity="0.8" />
+              <circle r="3.5" fill="#00d8ff"><animateMotion dur="5.5s" begin="-1.5s" repeatCount="indefinite"><mpath href="#o2"/></animateMotion></circle>
+            </g>
+          </g>
+          <g transform="rotate(65)">
+            <g clip-path="url(#front-clip)">
+              <use href="#o3" fill="none" stroke="url(#ring)" stroke-width="2" opacity="0.6" />
+              <circle r="5" fill="#06c"><animateMotion dur="9s" begin="-6s" repeatCount="indefinite"><mpath href="#o3"/></animateMotion></circle>
+            </g>
           </g>
         </svg>
       </div>
