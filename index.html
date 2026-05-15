@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" data-i18n="meta.desc" content="BitNode. Mobile programmatic, redefined.">
+  <title data-i18n="meta.title">BitNode</title>
+  <style>
+    /* =========================================================
+       FOUNDATION
+       Strict tokens. Pure white / pure black. One accent.
+       ========================================================= */
+    :root {
+      color-scheme: light;
+      --ink: #1d1d1f;
+      --ink-2: #424245;
+      --mute: #86868b;
+      --hair: #d2d2d7;
+      --bg: #ffffff;
+      --bg-2: #fbfbfd;
+      --black: #000000;
+      --accent: #06c;
+      --accent-2: #2997ff;
+      --gold: #f5d77a;
+      --max: 1280px;
+      --type-feature: clamp(56px, 9vw, 128px);
+      --type-h2: clamp(40px, 6vw, 80px);
+      --type-h3: clamp(28px, 3vw, 40px);
+      --type-lead: clamp(20px, 1.7vw, 28px);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "PingFang TC", "Hiragino Sans", "Microsoft YaHei", sans-serif;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.42;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+      color: inherit
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      margin: 0
+    }
+
+    /* =========================================================
+       TOP BAR
+       ========================================================= */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .topbar-inner {
+      max-width: var(--max);
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      font-size: 13px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 500;
+      letter-spacing: -0.01em
+    }
+
+    .brand svg {
+      width: 20px;
+      height: 20px;
+      display: block
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      font-size: 13px
+    }
+
+    .nav-links a {
+      opacity: 0.92;
+      transition: opacity .15s
+    }
+
+    .nav-links a:hover {
+      opacity: 0.55
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px
+    }
+
+    .lang-switch {
+      position: relative
+    }
+
+    .lang-btn {
+      height: 30px;
+      padding: 0 12px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.6);
+      color: var(--ink);
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: background .15s, border-color .15s;
+    }
+
+    .lang-btn:hover {
+      background: #fff;
+      border-color: rgba(0, 0, 0, 0.22)
+    }
+
+    .lang-btn svg {
+      width: 13px;
+      height: 13px
+    }
+
+    .lang-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      min-width: 190px;
+      padding: 6px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 14px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.14);
+      opacity: 0;
+      transform: translateY(-4px);
+      pointer-events: none;
+      transition: opacity .18s, transform .18s;
+    }
+
+    .lang-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto
+    }
+
+    .lang-menu button {
+      display: flex;
+      width: 100%;
+      padding: 10px 12px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--ink);
+      font-size: 13px;
+      text-align: left;
+      cursor: pointer;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .lang-menu button:hover {
+      background: var(--bg-2)
+    }
+
+    .lang-menu .check {
+      color: var(--accent);
+      opacity: 0;
+      font-size: 14px
+    }
+
+    .lang-menu button.active .check {
+      opacity: 1
+    }
+
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 28px
+    }
+
+    /* =========================================================
+       HERO — pure white, massive type, refined product orb
+       ========================================================= */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 120px 0 100px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 24px;
+      padding: 0;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+    }
+
+    .hero h1 {
+      max-width: 1080px;
+      margin: 0 auto 26px;
+      font-size: var(--type-feature);
+      font-weight: 600;
+      line-height: 0.98;
+      letter-spacing: -0.032em;
+      color: var(--black);
+    }
+
+    .hero h1 .quiet {
+      display: block;
+      color: var(--mute);
+      font-weight: 600;
+    }
+
+    .hero .lead {
+      max-width: 740px;
+      margin: 0 auto 36px;
+      font-size: var(--type-lead);
+      line-height: 1.35;
+      letter-spacing: -0.012em;
+      color: var(--ink-2);
+      font-weight: 400;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-size: 19px
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--accent);
+      transition: opacity .15s;
+      font-weight: 400;
+    }
+
+    .cta:hover {
+      opacity: 0.7
+    }
+
+    .cta::after {
+      content: "›";
+      margin-left: 3px;
+      transform: translateY(-1px);
+      font-size: 1.1em
+    }
+
+    /* HERO orb — global network, abstract and premium */
+    .orb-wrap {
+      margin: 90px auto 0;
+      width: min(880px, 92vw);
+      aspect-ratio: 1.1/1;
+      position: relative;
+    }
+
+    .orb-wrap svg {
+      width: 100%;
+      height: 100%;
+      display: block
+    }
+
+    .orb-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -12% -8%;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(0, 102, 204, 0.16), transparent 70%);
+      filter: blur(20px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .orb-wrap>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin-rev {
+      from {
+        transform: rotate(0);
+      }
+
+      to {
+        transform: rotate(-360deg);
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 0.55;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .orb-rotate {
+      transform-origin: 50% 50%;
+      animation: spin 80s linear infinite;
+    }
+
+    .orb-rotate-rev {
+      transform-origin: 50% 50%;
+      animation: spin-rev 110s linear infinite;
+    }
+
+    .orb-pulse {
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    /* =========================================================
+       SECTION SHELL
+       ========================================================= */
+    section.chapter {
+      padding: 170px 0;
+      text-align: center;
+      background: #fff;
+      border-bottom: 1px solid #ececef;
+    }
+
+    section.chapter.alt {
+      background: var(--bg-2)
+    }
+
+    section.chapter.dark {
+      background: #000;
+      color: #f5f5f7;
+      border: 0
+    }
+
+    section.chapter.dark h2,
+    section.chapter.dark .kicker {
+      color: #f5f5f7
+    }
+
+    section.chapter.dark .lead,
+    section.chapter.dark p {
+      color: #86868b
+    }
+
+    .kicker {
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: -0.008em;
+    }
+
+    section.chapter.dark .kicker {
+      color: var(--accent-2)
+    }
+
+    h2 {
+      max-width: 1000px;
+      margin: 0 auto 22px;
+      font-size: var(--type-h2);
+      font-weight: 600;
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      color: var(--black);
+    }
+
+    section.chapter.dark h2 {
+      color: #fff
+    }
+
+    h2 .quiet {
+      color: var(--mute);
+      font-weight: 600
+    }
+
+    section.chapter.dark h2 .quiet {
+      color: #86868b
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--ink-2);
+      font-size: var(--type-lead);
+      line-height: 1.38;
+      letter-spacing: -0.012em;
+    }
+
+    /* =========================================================
+       FEATURE NUMBER ROW (giant figures)
+       ========================================================= */
+    .figures {
+      margin: 120px auto 0;
+      max-width: 1120px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 60px;
+      text-align: left;
+    }
+
+    .fig b {
+      display: block;
+      font-size: clamp(60px, 7vw, 108px);
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: -0.035em;
+      background: linear-gradient(180deg, #ffffff 0%, #86868b 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .fig span {
+      display: block;
+      margin-top: 18px;
+      color: #a1a1a6;
+      font-size: 15px;
+      line-height: 1.5;
+      letter-spacing: -0.005em;
+      max-width: 240px;
+    }
+
+    /* =========================================================
+       SHOWCASE — split layout, refined product imagery
+       ========================================================= */
+    .showcase {
+      margin-top: 90px;
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 60px;
+      align-items: center;
+      text-align: left;
+    }
+
+    .showcase.flip {
+      grid-template-columns: 1.05fr 0.95fr
+    }
+
+    .showcase.flip .showcase-text {
+      order: 2
+    }
+
+    .showcase-text h3 {
+      font-size: var(--type-h3);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -0.022em;
+      color: var(--black);
+      margin-bottom: 18px;
+      max-width: 480px;
+    }
+
+    .showcase-text p {
+      color: var(--ink-2);
+      font-size: 19px;
+      line-height: 1.55;
+      max-width: 480px;
+      margin-bottom: 18px;
+    }
+
+    .showcase-text .cta {
+      font-size: 18px
+    }
+
+    .showcase-art {
+      position: relative;
+      aspect-ratio: 1.15/1;
+      border-radius: 28px;
+      background: linear-gradient(140deg, #fbfbfd 0%, #e9eef5 100%);
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .showcase-art.dark {
+      background: linear-gradient(140deg, #0b0b0d 0%, #1c1c1e 100%);
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    /* refined phone hero */
+    .phone-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .phone-card {
+      height: 84%;
+      aspect-ratio: 9/19;
+      border-radius: 38px;
+      background: linear-gradient(180deg, #1a1a1c 0%, #000 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 60px 120px rgba(0, 0, 0, 0.35), 0 0 0 8px rgba(255, 255, 255, 0.02) inset;
+      padding: 12px;
+      position: relative;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #1c1c1e 0%, #0b0b0d 100%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30%;
+      height: 18px;
+      border-radius: 12px;
+      background: #000;
+      z-index: 2;
+    }
+
+    .phone-time {
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: -0.005em;
+      z-index: 2;
+    }
+
+    .phone-status {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .phone-status .bar {
+      width: 4px;
+      height: 8px;
+      background: #fff;
+      border-radius: 1px
+    }
+
+    .phone-status .bar:nth-child(1) {
+      height: 4px;
+      opacity: 0.6
+    }
+
+    .phone-status .bar:nth-child(2) {
+      height: 6px;
+      opacity: 0.75
+    }
+
+    .phone-feed {
+      margin-top: 42px;
+      padding: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      flex: 1;
+    }
+
+    .feed-card {
+      padding: 11px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .feed-card .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px
+    }
+
+    .feed-card .av {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      flex: 0 0 auto
+    }
+
+    .feed-card .lines {
+      flex: 1
+    }
+
+    .feed-card .l1 {
+      height: 5px;
+      width: 65%;
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 3px;
+      margin-bottom: 3px
+    }
+
+    .feed-card .l2 {
+      height: 4px;
+      width: 42%;
+      background: rgba(255, 255, 255, 0.28);
+      border-radius: 3px
+    }
+
+    .feed-card .ph {
+      height: 42px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06)
+    }
+
+    .creative {
+      margin: auto 12px 12px;
+      padding: 12px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(41, 151, 255, 0.35);
+      box-shadow: 0 0 0 0 rgba(41, 151, 255, 0.0), 0 14px 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .creative::before {
+      content: "Ad";
+      position: absolute;
+      top: -9px;
+      left: 12px;
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: #2997ff;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .creative .crow {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      margin-bottom: 9px
+    }
+
+    .creative .ico {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, #0a84ff, #5e9eff);
+      flex: 0 0 auto
+    }
+
+    .creative .ttl {
+      flex: 1;
+      min-width: 0
+    }
+
+    .creative .ttl .t1 {
+      height: 6px;
+      width: 75%;
+      background: #f5f5f7;
+      border-radius: 3px;
+      margin-bottom: 4px
+    }
+
+    .creative .ttl .t2 {
+      height: 4px;
+      width: 50%;
+      background: #86868b;
+      border-radius: 3px
+    }
+
+    .creative .img-area {
+      height: 64px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #5e9eff, #0a84ff);
+      position: relative;
+      overflow: hidden
+    }
+
+    .creative .img-area::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.35), transparent 55%);
+    }
+
+    .creative .install-btn {
+      margin-top: 9px;
+      height: 22px;
+      border-radius: 11px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: 0.04em;
+    }
+
+    /* floating chip near phone */
+    .chip {
+      position: absolute;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.18);
+      font-size: 12px;
+      color: var(--ink);
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chip b {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      display: block;
+      line-height: 1
+    }
+
+    .chip span {
+      display: block;
+      color: var(--mute);
+      font-size: 11px;
+      margin-top: 3px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      font-weight: 600
+    }
+
+    .chip-1 {
+      top: 14%;
+      left: 4%
+    }
+
+    .chip-2 {
+      bottom: 14%;
+      right: 4%
+    }
+
+    .chip-3 {
+      top: 52%;
+      left: 0%
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #32d74b;
+      box-shadow: 0 0 0 4px rgba(50, 215, 75, 0.18);
+      flex: 0 0 auto;
+    }
+
+    @keyframes live-blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.45
+      }
+    }
+
+    .live-dot {
+      animation: live-blink 1.4s ease-in-out infinite
+    }
+
+    /* analytics art (dashboard refined) */
+    .analytics {
+      position: absolute;
+      inset: 14% 10%;
+      border-radius: 18px;
+      background: rgba(28, 28, 30, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      backdrop-filter: blur(20px);
+    }
+
+    .analytics .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end
+    }
+
+    .analytics .top .lbl {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #86868b;
+      font-weight: 600
+    }
+
+    .analytics .top .num {
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.025em;
+      line-height: 1
+    }
+
+    .analytics .top .pct {
+      color: var(--accent-2);
+      font-size: 12px;
+      margin-left: 6px
+    }
+
+    .analytics .chart {
+      flex: 1;
+      position: relative
+    }
+
+    .analytics .chart svg {
+      width: 100%;
+      height: 100%;
+      display: block
+    }
+
+    .analytics .footer {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px
+    }
+
+    .analytics .footer .col b {
+      display: block;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em
+    }
+
+    .analytics .footer .col span {
+      display: block;
+      color: #86868b;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 4px
+    }
+
+    /* =========================================================
+       SOLUTIONS — refined tall tiles, no bullet clutter
+       ========================================================= */
+    .triple {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      text-align: left;
+    }
+
+    .tile {
+      position: relative;
+      padding: 48px 42px 44px;
+      min-height: 540px;
+      border-radius: 24px;
+      background: #fbfbfd;
+      border: 1px solid #ececef;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .tile.black {
+      background: #000;
+      color: #f5f5f7;
+      border-color: #000
+    }
+
+    .tile.black .tile-tag,
+    .tile.black .tile-body {
+      color: #86868b
+    }
+
+    .tile.black h3 {
+      color: #fff
+    }
+
+    .tile-tag {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+
+    .tile h3 {
+      margin: 18px 0 14px;
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.022em;
+      color: var(--black);
+    }
+
+    .tile-body {
+      color: var(--ink-2);
+      font-size: 17px;
+      line-height: 1.5;
+      letter-spacing: -0.005em;
+      max-width: 340px;
+    }
+
+    .tile-foot {
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .tile-cta {
+      display: inline-flex;
+      align-items: center;
+      color: var(--accent);
+      font-size: 15px
+    }
+
+    .tile.black .tile-cta {
+      color: var(--accent-2)
+    }
+
+    .tile-cta::after {
+      content: "›";
+      margin-left: 6px;
+      font-size: 1.1em
+    }
+
+    .tile-visual {
+      margin-top: auto;
+      margin-bottom: 8px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+    }
+
+    .tile-visual svg {
+      display: block;
+      height: 100%;
+      width: auto
+    }
+
+    /* =========================================================
+       QUALITY — dark, 4 quiet systems
+       ========================================================= */
+    .qstack {
+      margin-top: 90px;
+      max-width: 1080px;
+      margin-left: auto;
+      margin-right: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .qstack .q {
+      padding: 44px 28px;
+      background: #0a0a0c;
+      text-align: left;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .qstack .q:last-child {
+      border-right: 0
+    }
+
+    .qstack .q .ix {
+      color: var(--accent-2);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      display: block;
+    }
+
+    .qstack .q h4 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .qstack .q p {
+      color: #a1a1a6;
+      font-size: 14px;
+      line-height: 1.55;
+      margin: 0
+    }
+
+    /* =========================================================
+       WORKFLOW — horizontal numbered rhythm
+       ========================================================= */
+    .steps {
+      margin-top: 90px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      text-align: left;
+      border-top: 1px solid var(--hair);
+    }
+
+    .step {
+      padding: 38px 30px 0;
+      border-right: 1px solid var(--hair);
+      min-height: 230px
+    }
+
+    .step:last-child {
+      border-right: 0
+    }
+
+    .step b {
+      display: block;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em
+    }
+
+    .step h4 {
+      margin: 14px 0 12px;
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.018em;
+      color: var(--black)
+    }
+
+    .step p {
+      color: var(--ink-2);
+      font-size: 16px;
+      line-height: 1.5
+    }
+
+    /* =========================================================
+       INDUSTRIES — light, clean
+       ========================================================= */
+    .verticals {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      border: 1px solid var(--hair);
+      border-radius: 20px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .vertical {
+      padding: 42px 24px;
+      border-right: 1px solid var(--hair);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .vertical:last-child {
+      border-right: 0
+    }
+
+    .vertical svg {
+      width: 30px;
+      height: 30px;
+      color: var(--ink)
+    }
+
+    .vertical span {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.008em
+    }
+
+    /* =========================================================
+       FAQ
+       ========================================================= */
+    .faq {
+      margin: 80px auto 0;
+      max-width: 920px;
+      text-align: left;
+      border-top: 1px solid var(--hair);
+    }
+
+    .faq details {
+      border-bottom: 1px solid var(--hair);
+      padding: 28px 4px
+    }
+
+    .faq summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--ink);
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+    }
+
+    .faq summary::-webkit-details-marker {
+      display: none
+    }
+
+    .faq summary::after {
+      content: "+";
+      flex: 0 0 auto;
+      color: var(--mute);
+      font-size: 28px;
+      line-height: 0.8;
+    }
+
+    .faq details[open] summary::after {
+      content: "−"
+    }
+
+    .faq details p {
+      margin-top: 16px;
+      color: var(--ink-2);
+      font-size: 17px;
+      line-height: 1.55;
+      max-width: 760px;
+    }
+
+    /* =========================================================
+       CONTACT
+       ========================================================= */
+    .contact {
+      padding: 170px 0;
+      background: var(--bg-2);
+      text-align: center
+    }
+
+    .form {
+      margin: 64px auto 0;
+      max-width: 760px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      text-align: left;
+    }
+
+    .form .field {
+      display: grid;
+      gap: 7px
+    }
+
+    .form .field.full {
+      grid-column: 1 / -1
+    }
+
+    .form label {
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--mute);
+      font-weight: 600;
+    }
+
+    .form input,
+    .form select,
+    .form textarea {
+      width: 100%;
+      padding: 15px 16px;
+      border: 1px solid var(--hair);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 16px;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    .form textarea {
+      resize: vertical;
+      min-height: 140px
+    }
+
+    .form input:focus,
+    .form select:focus,
+    .form textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.12);
+    }
+
+    .submit-row {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      margin-top: 16px
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 15px 30px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--black);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .15s, transform .15s;
+    }
+
+    .btn-primary:hover {
+      background: #1d1d1f
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98)
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+    footer {
+      background: #f5f5f7;
+      color: var(--mute);
+      padding: 40px 0 56px;
+      font-size: 12px
+    }
+
+    .foot-top {
+      max-width: var(--max);
+      margin: 0 auto 32px;
+      padding: 0 28px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 36px
+    }
+
+    .foot-top h5 {
+      margin: 0 0 12px;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 600
+    }
+
+    .foot-top a {
+      display: block;
+      padding: 5px 0;
+      color: #6e6e73;
+      font-size: 12px;
+      transition: color .15s
+    }
+
+    .foot-top a:hover {
+      color: var(--ink)
+    }
+
+    .foot-bottom {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px 28px 0;
+      border-top: 1px solid #d2d2d7;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+    @media (max-width: 1024px) {
+      section.chapter {
+        padding: 120px 0
+      }
+
+      .figures {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 50px
+      }
+
+      .triple {
+        grid-template-columns: 1fr;
+      }
+
+      .tile {
+        min-height: auto
+      }
+
+      .qstack {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .qstack .q:nth-child(2n) {
+        border-right: 0
+      }
+
+      .qstack .q:nth-child(-n+2) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1)
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .step:nth-child(2n) {
+        border-right: 0
+      }
+
+      .step {
+        border-bottom: 1px solid var(--hair);
+        min-height: auto;
+        padding-bottom: 38px
+      }
+
+      .verticals {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .vertical {
+        border-bottom: 1px solid var(--hair)
+      }
+
+      .vertical:nth-child(3n) {
+        border-right: 0
+      }
+
+      .vertical:nth-last-child(-n+3) {
+        border-bottom: 0
+      }
+
+      .showcase,
+      .showcase.flip {
+        grid-template-columns: 1fr;
+        gap: 40px
+      }
+
+      .showcase.flip .showcase-text {
+        order: 0
+      }
+
+      .nav-links {
+        display: none
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 80px 0 60px
+      }
+
+      section.chapter,
+      .contact {
+        padding: 90px 0
+      }
+
+      .figures {
+        grid-template-columns: 1fr
+      }
+
+      .qstack {
+        grid-template-columns: 1fr
+      }
+
+      .qstack .q {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1)
+      }
+
+      .qstack .q:last-child {
+        border-bottom: 0
+      }
+
+      .steps {
+        grid-template-columns: 1fr
+      }
+
+      .step {
+        border-right: 0
+      }
+
+      .verticals {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .vertical {
+        border-right: 1px solid var(--hair)
+      }
+
+      .vertical:nth-child(2n) {
+        border-right: 0
+      }
+
+      .form {
+        grid-template-columns: 1fr
+      }
+
+      .foot-top {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .chip-1 {
+        top: 5%;
+        left: 0%
+      }
+
+      .chip-2 {
+        bottom: 5%;
+        right: 0%
+      }
+
+      .chip-3 {
+        display: none
+      }
+    }
+
+    /* CJK loosening */
+    html[lang^="zh"] body,
+    html[lang="ja"] body {
+      letter-spacing: 0;
+    }
+
+    html[lang^="zh"] h1,
+    html[lang="ja"] h1 {
+      letter-spacing: -0.018em;
+    }
+
+    html[lang^="zh"] h2,
+    html[lang="ja"] h2 {
+      letter-spacing: -0.015em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =====================  TOP BAR  ===================== -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="5" cy="5" r="2.6" fill="currentColor" />
+          <circle cx="19" cy="5" r="2.6" fill="currentColor" />
+          <circle cx="5" cy="19" r="2.6" fill="currentColor" />
+          <circle cx="19" cy="19" r="2.6" fill="currentColor" />
+          <path d="M5 5L19 19M19 5L5 19" stroke="currentColor" stroke-width="1.4" opacity="0.5" />
+        </svg>
+        BitNode
+      </a>
+      <nav class="nav-links">
+        <a href="#solutions" data-i18n="nav.solutions">Solutions</a>
+        <a href="#quality" data-i18n="nav.quality">Quality</a>
+        <a href="#workflow" data-i18n="nav.workflow">Workflow</a>
+        <a href="#verticals" data-i18n="nav.verticals">Industries</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <div class="lang-switch">
+          <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" />
+            </svg>
+            <span id="langCurrent">English</span>
+          </button>
+          <div class="lang-menu" id="langMenu" role="menu">
+            <button data-lang="en"><span>English</span><span class="check">✓</span></button>
+            <button data-lang="zh-CN"><span>简体中文</span><span class="check">✓</span></button>
+            <button data-lang="zh-TW"><span>繁體中文</span><span class="check">✓</span></button>
+            <button data-lang="ja"><span>日本語</span><span class="check">✓</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- =====================  HERO  ===================== -->
+    <section class="hero">
+      <p class="eyebrow" data-i18n="hero.eyebrow">Introducing BitNode</p>
+      <h1>
+        <span data-i18n="hero.title.l1">Mobile programmatic,</span>
+        <span class="quiet" data-i18n="hero.title.l2">redefined.</span>
+      </h1>
+      <p class="lead" data-i18n="hero.lead">A demand-and-supply platform for app advertisers, agencies, and publishers —
+        engineered for transparent traffic, real-time optimization, and outcomes that compound.</p>
+      <div class="cta-row">
+        <a class="cta" href="#solutions" data-i18n="hero.cta1">See what's new</a>
+        <a class="cta" href="#contact" data-i18n="hero.cta2">Talk to sales</a>
+      </div>
+
+      <!-- Refined global-network orb (no cheap dashboard) -->
+      <div class="orb-wrap" aria-hidden="true">
+        <svg viewBox="-200 -200 400 400">
+          <defs>
+            <radialGradient id="core" cx="0.35" cy="0.35" r="0.7">
+              <stop offset="0%" stop-color="#3a3a3c" />
+              <stop offset="55%" stop-color="#0a0a0c" />
+              <stop offset="100%" stop-color="#000" />
+            </radialGradient>
+            <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#06c" stop-opacity="0.6" />
+              <stop offset="100%" stop-color="#2997ff" stop-opacity="0.05" />
+            </linearGradient>
+            <radialGradient id="hilite" cx="0.32" cy="0.28" r="0.6">
+              <stop offset="0%" stop-color="rgba(255,255,255,0.35)" />
+              <stop offset="60%" stop-color="rgba(255,255,255,0)" />
+            </radialGradient>
+          </defs>
+
+          <!-- back distant rings -->
+          <g class="orb-rotate-rev" opacity="0.55">
+            <ellipse cx="0" cy="0" rx="190" ry="60" fill="none" stroke="url(#ring)" stroke-width="1" />
+            <ellipse cx="0" cy="0" rx="170" ry="42" fill="none" stroke="url(#ring)" stroke-width="0.8" opacity="0.5"
+              transform="rotate(20)" />
+          </g>
+
+          <!-- core sphere -->
+          <circle cx="0" cy="0" r="142" fill="url(#core)" />
+          <circle cx="0" cy="0" r="142" fill="url(#hilite)" />
+
+          <!-- meridian lines (subtle) -->
+          <g stroke="rgba(255,255,255,0.08)" stroke-width="0.6" fill="none">
+            <ellipse cx="0" cy="0" rx="142" ry="40" />
+            <ellipse cx="0" cy="0" rx="142" ry="80" />
+            <ellipse cx="0" cy="0" rx="142" ry="120" />
+            <ellipse cx="0" cy="0" rx="40" ry="142" />
+            <ellipse cx="0" cy="0" rx="80" ry="142" />
+            <ellipse cx="0" cy="0" rx="120" ry="142" />
+          </g>
+
+          <!-- glowing nodes on sphere -->
+          <g fill="#2997ff">
+            <circle cx="-70" cy="-50" r="3.5" class="orb-pulse" />
+            <circle cx="40" cy="-80" r="2.5" class="orb-pulse" style="animation-delay:.6s" />
+            <circle cx="95" cy="20" r="3" class="orb-pulse" style="animation-delay:1.2s" />
+            <circle cx="-30" cy="90" r="3.5" class="orb-pulse" style="animation-delay:.3s" />
+            <circle cx="60" cy="70" r="2.5" class="orb-pulse" style="animation-delay:1.6s" />
+            <circle cx="-110" cy="20" r="2.8" class="orb-pulse" style="animation-delay:.9s" />
+            <circle cx="10" cy="-20" r="2" class="orb-pulse" style="animation-delay:2s" />
+          </g>
+
+          <!-- highlight on top-left -->
+          <ellipse cx="-46" cy="-58" rx="28" ry="12" fill="rgba(255,255,255,0.1)" transform="rotate(-30 -46 -58)" />
+
+          <!-- front orbiting rings -->
+          <g class="orb-rotate" opacity="0.8">
+            <ellipse cx="0" cy="0" rx="178" ry="56" fill="none" stroke="url(#ring)" stroke-width="1.2" />
+            <circle cx="178" cy="0" r="4" fill="#2997ff" />
+          </g>
+          <g class="orb-rotate-rev" opacity="0.7" style="animation-duration:60s">
+            <ellipse cx="0" cy="0" rx="170" ry="80" fill="none" stroke="url(#ring)" stroke-width="0.8"
+              transform="rotate(40)" />
+            <circle cx="-130" cy="62" r="3.5" fill="#06c" />
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- =====================  GIANT FIGURES — black moment  ===================== -->
+    <section class="chapter dark">
+      <div class="container">
+        <p class="kicker" data-i18n="stats.kicker">Built at scale</p>
+        <h2>
+          <span data-i18n="stats.h1">Numbers that hold up.</span>
+          <span class="quiet" data-i18n="stats.h2"> Even in real time.</span>
+        </h2>
+        <div class="figures">
+          <div class="fig"><b>4.8B</b><span data-i18n="stats.f1">Bid requests processed every day.</span></div>
+          <div class="fig"><b>96<small
+                style="font-size:0.55em;font-weight:600;letter-spacing:-0.02em;background:none;-webkit-text-fill-color:#86868b;color:#86868b">
+                ms</small></b><span data-i18n="stats.f2">Median end-to-end bid latency.</span></div>
+          <div class="fig"><b>180+</b><span data-i18n="stats.f3">Markets across APAC, MENA, LATAM, EU, NA.</span></div>
+          <div class="fig"><b>0.3<small
+                style="font-size:0.55em;font-weight:600;letter-spacing:-0.02em;background:none;-webkit-text-fill-color:#86868b;color:#86868b">%</small></b><span
+              data-i18n="stats.f4">Average invalid traffic across active mobile inventory.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================  SHOWCASE — Performance  ===================== -->
+    <section class="chapter">
+      <div class="container">
+        <p class="kicker" data-i18n="show.kicker">Performance</p>
+        <h2>
+          <span data-i18n="show.h1">Acquisition that</span><br>
+          <span data-i18n="show.h2">comes back.</span>
+        </h2>
+        <p class="lead" data-i18n="show.sub">Every bid evaluated against real outcomes — not just clicks. Performance
+          bidding, creative-level reporting, event-based optimization.</p>
+
+        <div class="showcase">
+          <div class="showcase-text">
+            <h3 data-i18n="show.t.h">From bid to install — under 100ms.</h3>
+            <p data-i18n="show.t.p1">BitNode reads campaign objectives, supply signals, and post-install value in real
+              time, then commits budget toward the moments most likely to return.</p>
+            <p data-i18n="show.t.p2">iOS, Android, SKAdNetwork, AppTrackingTransparency — handled where they should be,
+              in the platform.</p>
+            <a class="cta" href="#contact" data-i18n="show.t.cta">Get a demo</a>
+          </div>
+          <div class="showcase-art dark">
+            <div class="analytics">
+              <div class="top">
+                <div>
+                  <div class="lbl" data-i18n="show.dash.label">Live ROAS · 24h</div>
+                  <div class="num">182.4<span class="pct">%</span></div>
+                </div>
+                <div style="text-align:right">
+                  <div class="lbl" data-i18n="show.dash.label2">Bid latency</div>
+                  <div style="color:#fff;font-size:18px;font-weight:500;letter-spacing:-0.015em">96<span
+                      style="color:#86868b;font-size:0.7em;margin-left:2px">ms</span></div>
+                </div>
+              </div>
+              <div class="chart">
+                <svg viewBox="0 0 600 180" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="gline2" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#2997ff" stop-opacity="0.55" />
+                      <stop offset="100%" stop-color="#2997ff" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <line x1="0" y1="50" x2="600" y2="50" stroke="rgba(255,255,255,0.05)" />
+                  <line x1="0" y1="100" x2="600" y2="100" stroke="rgba(255,255,255,0.05)" />
+                  <line x1="0" y1="150" x2="600" y2="150" stroke="rgba(255,255,255,0.05)" />
+                  <path
+                    d="M0,140 C60,120 90,135 130,115 C170,95 210,100 250,75 C290,55 340,70 380,45 C420,25 460,38 500,18 C530,8 570,12 600,4 L600,180 L0,180 Z"
+                    fill="url(#gline2)" />
+                  <path
+                    d="M0,140 C60,120 90,135 130,115 C170,95 210,100 250,75 C290,55 340,70 380,45 C420,25 460,38 500,18 C530,8 570,12 600,4"
+                    stroke="#2997ff" stroke-width="2.2" fill="none" />
+                  <circle cx="600" cy="4" r="5" fill="#2997ff" />
+                  <circle cx="600" cy="4" r="10" fill="#2997ff" opacity="0.2" />
+                </svg>
+              </div>
+              <div class="footer">
+                <div class="col"><b>4.8B</b><span data-i18n="show.dash.bids">Bids / day</span></div>
+                <div class="col"><b>$1.42</b><span data-i18n="show.dash.cpi">Avg. CPI</span></div>
+                <div class="col"><b>62%</b><span data-i18n="show.dash.d7">D7 retention</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================  SHOWCASE 2 — Publishers (phone hero)  ===================== -->
+    <section class="chapter alt">
+      <div class="container">
+        <div class="showcase flip">
+          <div class="showcase-text">
+            <p class="kicker" style="text-align:left" data-i18n="pub.kicker">Monetization</p>
+            <h3 data-i18n="pub.h">Premium demand, without the headaches.</h3>
+            <p data-i18n="pub.p1">Package in-app supply for performance buyers across rewarded, interstitial, native and
+              banner. Keep user experience intact. Keep eCPMs honest.</p>
+            <p data-i18n="pub.p2">Floor control, demand source visibility, direct deals and private marketplaces — in
+              one place.</p>
+            <a class="cta" href="#contact" data-i18n="pub.cta">Connect your inventory</a>
+          </div>
+          <div class="showcase-art">
+            <div class="phone-stage">
+              <div class="phone-card">
+                <div class="phone-screen">
+                  <div class="phone-notch"></div>
+                  <div class="phone-time">9:41</div>
+                  <div class="phone-status">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                  </div>
+                  <div class="phone-feed">
+                    <div class="feed-card">
+                      <div class="row">
+                        <div class="av" style="background:linear-gradient(135deg,#ff9f0a,#ff6482)"></div>
+                        <div class="lines">
+                          <div class="l1"></div>
+                          <div class="l2"></div>
+                        </div>
+                      </div>
+                      <div class="ph"></div>
+                    </div>
+                    <div class="feed-card">
+                      <div class="row">
+                        <div class="av" style="background:linear-gradient(135deg,#32d74b,#0a84ff)"></div>
+                        <div class="lines">
+                          <div class="l1" style="width:55%"></div>
+                          <div class="l2"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="creative">
+                    <div class="crow">
+                      <div class="ico"></div>
+                      <div class="ttl">
+                        <div class="t1"></div>
+                        <div class="t2"></div>
+                      </div>
+                    </div>
+                    <div class="img-area"></div>
+                    <div class="install-btn" data-i18n="pub.install">INSTALL</div>
+                  </div>
+                </div>
+              </div>
+              <div class="chip chip-1">
+                <div><b>+38%</b><span data-i18n="pub.chip1">ecpm lift</span></div>
+              </div>
+              <div class="chip chip-2">
+                <div><b>62%</b><span data-i18n="pub.chip2">fill rate</span></div>
+              </div>
+              <div class="chip chip-3">
+                <span class="live-dot" aria-hidden="true"></span>
+                <div><b data-i18n="pub.chip3.n">142</b><span data-i18n="pub.chip3">live deals</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================  SOLUTIONS — Three pillars  ===================== -->
+    <section class="chapter" id="solutions">
+      <div class="container">
+        <p class="kicker" data-i18n="sol.kicker">For every team</p>
+        <h2 data-i18n="sol.h">One platform. Three teams. One outcome.</h2>
+
+        <div class="triple">
+          <article class="tile">
+            <div>
+              <div class="tile-tag" data-i18n="sol.a.tag">For Advertisers</div>
+              <h3 data-i18n="sol.a.h">Buy users that stay.</h3>
+              <p class="tile-body" data-i18n="sol.a.p">Performance bidding tied to install, event, and revenue outcomes.
+                iOS, Android, SKAN, MMP — handled.</p>
+            </div>
+            <div class="tile-visual" aria-hidden="true">
+              <svg viewBox="0 0 220 140">
+                <defs>
+                  <linearGradient id="solA" x1="0" y1="1" x2="0" y2="0">
+                    <stop offset="0%" stop-color="#06c" stop-opacity="0.0" />
+                    <stop offset="100%" stop-color="#06c" stop-opacity="0.25" />
+                  </linearGradient>
+                </defs>
+                <path d="M0 120 Q40 95 70 85 T130 50 T220 12 L220 140 L0 140 Z" fill="url(#solA)" />
+                <path d="M0 120 Q40 95 70 85 T130 50 T220 12" stroke="#06c" stroke-width="2.5" fill="none" />
+                <circle cx="220" cy="12" r="5" fill="#06c" />
+                <circle cx="220" cy="12" r="12" fill="#06c" opacity="0.15" />
+                <circle cx="70" cy="85" r="3" fill="#06c" />
+                <circle cx="130" cy="50" r="3" fill="#06c" />
+              </svg>
+            </div>
+            <div class="tile-foot">
+              <a class="tile-cta" href="#contact" data-i18n="sol.a.cta">Learn more</a>
+            </div>
+          </article>
+
+          <article class="tile black">
+            <div>
+              <div class="tile-tag" data-i18n="sol.p.tag">For Publishers</div>
+              <h3 data-i18n="sol.p.h">Monetize, on your terms.</h3>
+              <p class="tile-body" data-i18n="sol.p.p">Package in-app inventory for premium demand — across formats,
+                with floors and source-level transparency.</p>
+            </div>
+            <div class="tile-visual" aria-hidden="true">
+              <svg viewBox="0 0 220 140">
+                <rect x="0" y="80" width="22" height="60" rx="3" fill="#2997ff" opacity="0.3" />
+                <rect x="30" y="62" width="22" height="78" rx="3" fill="#2997ff" opacity="0.45" />
+                <rect x="60" y="44" width="22" height="96" rx="3" fill="#2997ff" opacity="0.6" />
+                <rect x="90" y="28" width="22" height="112" rx="3" fill="#2997ff" opacity="0.78" />
+                <rect x="120" y="40" width="22" height="100" rx="3" fill="#2997ff" />
+                <rect x="150" y="22" width="22" height="118" rx="3" fill="#2997ff" />
+                <rect x="180" y="10" width="22" height="130" rx="3" fill="#2997ff" />
+              </svg>
+            </div>
+            <div class="tile-foot">
+              <a class="tile-cta" href="#contact" data-i18n="sol.p.cta">Learn more</a>
+            </div>
+          </article>
+
+          <article class="tile">
+            <div>
+              <div class="tile-tag" data-i18n="sol.g.tag">For Agencies</div>
+              <h3 data-i18n="sol.g.h">Plans that prove themselves.</h3>
+              <p class="tile-body" data-i18n="sol.g.p">Cross-market media plans, regional controls, pacing governance,
+                and one report your client will actually read.</p>
+            </div>
+            <div class="tile-visual" aria-hidden="true">
+              <svg viewBox="0 0 220 140">
+                <circle cx="50" cy="70" r="40" fill="none" stroke="#06c" stroke-width="1.5" opacity="0.35" />
+                <circle cx="110" cy="70" r="40" fill="none" stroke="#06c" stroke-width="1.5" opacity="0.55" />
+                <circle cx="170" cy="70" r="40" fill="none" stroke="#06c" stroke-width="1.5" opacity="0.8" />
+                <circle cx="110" cy="70" r="6" fill="#06c" />
+                <circle cx="50" cy="70" r="3" fill="#06c" opacity="0.6" />
+                <circle cx="170" cy="70" r="3" fill="#06c" opacity="0.6" />
+              </svg>
+            </div>
+            <div class="tile-foot">
+              <a class="tile-cta" href="#contact" data-i18n="sol.g.cta">Learn more</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================  QUALITY — DARK  ===================== -->
+    <section class="chapter dark" id="quality">
+      <div class="container">
+        <p class="kicker" data-i18n="q.kicker">Trust</p>
+        <h2>
+          <span data-i18n="q.h1">Scale matters.</span>
+          <span class="quiet" data-i18n="q.h2"> Trust matters more.</span>
+        </h2>
+        <p class="lead" data-i18n="q.sub">Four quiet systems doing loud work — source screening, anomaly detection,
+          pacing, and reporting you can audit.</p>
+
+        <div class="qstack">
+          <div class="q"><span class="ix">01</span>
+            <h4 data-i18n="q.a.h">Source screening</h4>
+            <p data-i18n="q.a.p">Supply onboarding and placement-level review before any campaign sees the inventory.
+            </p>
+          </div>
+          <div class="q"><span class="ix">02</span>
+            <h4 data-i18n="q.b.h">Anomaly detection</h4>
+            <p data-i18n="q.b.p">Continuous checks across clicks, installs, and post-install events. Invalid activity
+              stays out.</p>
+          </div>
+          <div class="q"><span class="ix">03</span>
+            <h4 data-i18n="q.c.h">Pacing &amp; controls</h4>
+            <p data-i18n="q.c.p">Frequency, budget, and dayparting governance — per campaign, market, and supply path.
+            </p>
+          </div>
+          <div class="q"><span class="ix">04</span>
+            <h4 data-i18n="q.d.h">Transparent reporting</h4>
+            <p data-i18n="q.d.p">Every spend decision is supported by data you can audit. Not numbers you have to trust.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================  WORKFLOW  ===================== -->
+    <section class="chapter" id="workflow">
+      <div class="container">
+        <p class="kicker" data-i18n="wf.kicker">Workflow</p>
+        <h2 data-i18n="wf.h">Brief. Plan. Launch. Optimize.</h2>
+        <p class="lead" data-i18n="wf.sub">A clean operating rhythm — from first conversation to compounding
+          performance.</p>
+
+        <div class="steps">
+          <div class="step"><b>01</b>
+            <h4 data-i18n="wf.s1.h">Brief</h4>
+            <p data-i18n="wf.s1.p">Markets, KPIs, attribution, creative, compliance — captured once.</p>
+          </div>
+          <div class="step"><b>02</b>
+            <h4 data-i18n="wf.s2.h">Plan</h4>
+            <p data-i18n="wf.s2.p">Sources, bidding strategy, budget pacing, measurement — mapped before launch.</p>
+          </div>
+          <div class="step"><b>03</b>
+            <h4 data-i18n="wf.s3.h">Launch</h4>
+            <p data-i18n="wf.s3.p">Live campaigns with source controls, tracking, reporting, and alerts.</p>
+          </div>
+          <div class="step"><b>04</b>
+            <h4 data-i18n="wf.s4.h">Optimize</h4>
+            <p data-i18n="wf.s4.p">Daily reviews shift budget toward the supply, creatives, and audiences earning their
+              place.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================  INDUSTRIES  ===================== -->
+    <section class="chapter alt" id="verticals">
+      <div class="container">
+        <p class="kicker" data-i18n="v.kicker">Industries</p>
+        <h2 data-i18n="v.h">Focused on mobile-first growth.</h2>
+        <div class="verticals">
+          <div class="vertical">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="3" y="7" width="18" height="10" rx="3" />
+              <path d="M7 12h2M8 11v2M15 11h.01M17 13h.01" />
+            </svg>
+            <span data-i18n="v.gaming">Gaming</span>
+          </div>
+          <div class="vertical">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-7h6v7" />
+            </svg>
+            <span data-i18n="v.finance">Finance</span>
+          </div>
+          <div class="vertical">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="9" cy="20" r="1.5" />
+              <circle cx="17" cy="20" r="1.5" />
+              <path d="M3 4h2l3 12h11l2-8H6" />
+            </svg>
+            <span data-i18n="v.ecom">E-commerce</span>
+          </div>
+          <div class="vertical">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" />
+            </svg>
+            <span data-i18n="v.utility">Utilities</span>
+          </div>
+          <div class="vertical">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="M10 9l5 3-5 3z" fill="currentColor" />
+            </svg>
+            <span data-i18n="v.ent">Entertainment</span>
+          </div>
+          <div class="vertical">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M2 12l20-7-7 20-3-9z" />
+            </svg>
+            <span data-i18n="v.travel">Travel</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================  FAQ  ===================== -->
+    <section class="chapter">
+      <div class="container">
+        <p class="kicker" data-i18n="faq.kicker">Questions</p>
+        <h2 data-i18n="faq.h">Good to know.</h2>
+        <div class="faq">
+          <details>
+            <summary data-i18n="faq.q1">Do you support third-party attribution?</summary>
+            <p data-i18n="faq.a1">Yes. BitNode works with mainstream mobile measurement workflows through postbacks,
+              event mapping, and campaign identifiers.</p>
+          </details>
+          <details>
+            <summary data-i18n="faq.q2">Which buying models are available?</summary>
+            <p data-i18n="faq.a2">Campaigns can be structured around CPI, CPA, CPM, CPC, or custom commercial terms
+              depending on market, supply, and KPI.</p>
+          </details>
+          <details>
+            <summary data-i18n="faq.q3">Can publishers connect inventory?</summary>
+            <p data-i18n="faq.a3">Yes. We review in-app supply, ad formats, market coverage, traffic quality, and
+              integration options.</p>
+          </details>
+          <details>
+            <summary data-i18n="faq.q4">Where is BitNode based?</summary>
+            <p data-i18n="faq.a4">BitNode is a Hong Kong company serving cross-border mobile advertising demand and
+              supply partners worldwide.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================  CONTACT  ===================== -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <p class="kicker" data-i18n="c.kicker">Contact</p>
+        <h2 data-i18n="c.h">Let's start the conversation.</h2>
+        <p class="lead" data-i18n="c.sub">Share a short brief. The BitNode team will follow up with fit, market
+          availability, and next steps.</p>
+
+        <form class="form" id="leadForm" novalidate>
+          <div class="field"><label for="name" data-i18n="c.name">Name</label><input id="name" name="name"
+              autocomplete="name" required></div>
+          <div class="field"><label for="email" data-i18n="c.email">Business email</label><input id="email" name="email"
+              type="email" autocomplete="email" required></div>
+          <div class="field"><label for="company" data-i18n="c.company">Company</label><input id="company"
+              name="company" autocomplete="organization" required></div>
+          <div class="field">
+            <label for="role" data-i18n="c.role">Partnership type</label>
+            <select id="role" name="role">
+              <option data-i18n="c.role.opt1">Advertiser / App Developer</option>
+              <option data-i18n="c.role.opt2">Publisher / App Owner</option>
+              <option data-i18n="c.role.opt3">Agency / Network</option>
+              <option data-i18n="c.role.opt4">Technology Partner</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="message" data-i18n="c.brief">Brief</label>
+            <textarea id="message" name="message" data-i18n-placeholder="c.brief.ph"
+              placeholder="Markets, KPI, traffic type, monthly budget, app category, or inventory details"></textarea>
+          </div>
+          <div class="submit-row">
+            <button type="submit" class="btn-primary" data-i18n="c.submit">Send brief →</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================  FOOTER  ===================== -->
+  <footer>
+    <div class="foot-top">
+      <div>
+        <h5 data-i18n="f.col1">Platform</h5>
+        <a href="#solutions" data-i18n="nav.solutions">Solutions</a>
+        <a href="#quality" data-i18n="nav.quality">Quality</a>
+        <a href="#workflow" data-i18n="nav.workflow">Workflow</a>
+      </div>
+      <div>
+        <h5 data-i18n="f.col2">Partnership</h5>
+        <a href="#solutions" data-i18n="f.advertisers">For advertisers</a>
+        <a href="#solutions" data-i18n="f.publishers">For publishers</a>
+        <a href="#solutions" data-i18n="f.agencies">For agencies</a>
+      </div>
+      <div>
+        <h5 data-i18n="f.col3">Company</h5>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+        <a href="/cdn-cgi/l/email-protection#04746576706a6176776c6d747744666d706a6b60612a6c6f"><span
+            class="__cf_email__"
+            data-cfemail="3a4a5b484e545f484952534a497a58534e54555e5f145251">[email&#160;protected]</span></a>
+      </div>
+      <div>
+        <h5 data-i18n="f.col4">Region</h5>
+        <a href="#" data-i18n="f.region">Hong Kong</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div><span data-i18n="f.copy">© BitNode Limited. All rights reserved.</span> <span id="year"></span></div>
+      <div data-i18n="f.compliance">Privacy · Terms · Cookies</div>
+    </div>
+  </footer>
+
+  <!-- =====================  I18N + INTERACTIONS  ===================== -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
+    (function () {
+      const I18N = {
+        "en": {
+          "meta.title": "BitNode — Mobile programmatic, redefined.",
+          "meta.desc": "BitNode. Mobile programmatic, redefined.",
+          "nav.solutions": "Solutions", "nav.quality": "Quality", "nav.workflow": "Workflow", "nav.verticals": "Industries", "nav.contact": "Contact",
+          "hero.eyebrow": "Introducing BitNode",
+          "hero.title.l1": "Mobile programmatic,", "hero.title.l2": "redefined.",
+          "hero.lead": "A demand-and-supply platform for app advertisers, agencies, and publishers — engineered for transparent traffic, real-time optimization, and outcomes that compound.",
+          "hero.cta1": "See what's new", "hero.cta2": "Talk to sales",
+          "stats.kicker": "Built at scale", "stats.h1": "Numbers that hold up.", "stats.h2": " Even in real time.",
+          "stats.f1": "Bid requests processed every day.", "stats.f2": "Median end-to-end bid latency.",
+          "stats.f3": "Markets across APAC, MENA, LATAM, EU, NA.", "stats.f4": "Average invalid traffic across active mobile inventory.",
+          "show.kicker": "Performance", "show.h1": "Acquisition that", "show.h2": "comes back.",
+          "show.sub": "Every bid evaluated against real outcomes — not just clicks. Performance bidding, creative-level reporting, event-based optimization.",
+          "show.t.h": "From bid to install — under 100ms.",
+          "show.t.p1": "BitNode reads campaign objectives, supply signals, and post-install value in real time, then commits budget toward the moments most likely to return.",
+          "show.t.p2": "iOS, Android, SKAdNetwork, AppTrackingTransparency — handled where they should be, in the platform.",
+          "show.t.cta": "Get a demo",
+          "show.dash.label": "Live ROAS · 24h", "show.dash.label2": "Bid latency",
+          "show.dash.bids": "Bids / day", "show.dash.cpi": "Avg. CPI", "show.dash.d7": "D7 retention",
+          "pub.kicker": "Monetization", "pub.h": "Premium demand, without the headaches.",
+          "pub.p1": "Package in-app supply for performance buyers across rewarded, interstitial, native and banner. Keep user experience intact. Keep eCPMs honest.",
+          "pub.p2": "Floor control, demand source visibility, direct deals and private marketplaces — in one place.",
+          "pub.cta": "Connect your inventory",
+          "pub.install": "INSTALL", "pub.chip1": "eCPM lift", "pub.chip2": "fill rate", "pub.chip3": "live deals", "pub.chip3.n": "142",
+          "sol.kicker": "For every team", "sol.h": "One platform. Three teams. One outcome.",
+          "sol.a.tag": "For Advertisers", "sol.a.h": "Buy users that stay.", "sol.a.p": "Performance bidding tied to install, event, and revenue outcomes. iOS, Android, SKAN, MMP — handled.", "sol.a.cta": "Learn more",
+          "sol.p.tag": "For Publishers", "sol.p.h": "Monetize, on your terms.", "sol.p.p": "Package in-app inventory for premium demand — across formats, with floors and source-level transparency.", "sol.p.cta": "Learn more",
+          "sol.g.tag": "For Agencies", "sol.g.h": "Plans that prove themselves.", "sol.g.p": "Cross-market media plans, regional controls, pacing governance, and one report your client will actually read.", "sol.g.cta": "Learn more",
+          "q.kicker": "Trust", "q.h1": "Scale matters.", "q.h2": " Trust matters more.",
+          "q.sub": "Four quiet systems doing loud work — source screening, anomaly detection, pacing, and reporting you can audit.",
+          "q.a.h": "Source screening", "q.a.p": "Supply onboarding and placement-level review before any campaign sees the inventory.",
+          "q.b.h": "Anomaly detection", "q.b.p": "Continuous checks across clicks, installs, and post-install events. Invalid activity stays out.",
+          "q.c.h": "Pacing & controls", "q.c.p": "Frequency, budget, and dayparting governance — per campaign, market, and supply path.",
+          "q.d.h": "Transparent reporting", "q.d.p": "Every spend decision is supported by data you can audit. Not numbers you have to trust.",
+          "wf.kicker": "Workflow", "wf.h": "Brief. Plan. Launch. Optimize.", "wf.sub": "A clean operating rhythm — from first conversation to compounding performance.",
+          "wf.s1.h": "Brief", "wf.s1.p": "Markets, KPIs, attribution, creative, compliance — captured once.",
+          "wf.s2.h": "Plan", "wf.s2.p": "Sources, bidding strategy, budget pacing, measurement — mapped before launch.",
+          "wf.s3.h": "Launch", "wf.s3.p": "Live campaigns with source controls, tracking, reporting, and alerts.",
+          "wf.s4.h": "Optimize", "wf.s4.p": "Daily reviews shift budget toward the supply, creatives, and audiences earning their place.",
+          "v.kicker": "Industries", "v.h": "Focused on mobile-first growth.",
+          "v.gaming": "Gaming", "v.finance": "Finance", "v.ecom": "E-commerce", "v.utility": "Utilities", "v.ent": "Entertainment", "v.travel": "Travel",
+          "faq.kicker": "Questions", "faq.h": "Good to know.",
+          "faq.q1": "Do you support third-party attribution?", "faq.a1": "Yes. BitNode works with mainstream mobile measurement workflows through postbacks, event mapping, and campaign identifiers.",
+          "faq.q2": "Which buying models are available?", "faq.a2": "Campaigns can be structured around CPI, CPA, CPM, CPC, or custom commercial terms depending on market, supply, and KPI.",
+          "faq.q3": "Can publishers connect inventory?", "faq.a3": "Yes. We review in-app supply, ad formats, market coverage, traffic quality, and integration options.",
+          "faq.q4": "Where is BitNode based?", "faq.a4": "BitNode is a Hong Kong company serving cross-border mobile advertising demand and supply partners worldwide.",
+          "c.kicker": "Contact", "c.h": "Let's start the conversation.", "c.sub": "Share a short brief. The BitNode team will follow up with fit, market availability, and next steps.",
+          "c.name": "Name", "c.email": "Business email", "c.company": "Company", "c.role": "Partnership type",
+          "c.role.opt1": "Advertiser / App Developer", "c.role.opt2": "Publisher / App Owner", "c.role.opt3": "Agency / Network", "c.role.opt4": "Technology Partner",
+          "c.brief": "Brief", "c.brief.ph": "Markets, KPI, traffic type, monthly budget, app category, or inventory details", "c.submit": "Send brief →",
+          "f.col1": "Platform", "f.col2": "Partnership", "f.col3": "Company", "f.col4": "Region",
+          "f.advertisers": "For advertisers", "f.publishers": "For publishers", "f.agencies": "For agencies", "f.region": "Hong Kong",
+          "f.copy": "© BitNode Limited. All rights reserved.", "f.compliance": "Privacy · Terms · Cookies",
+          "_label": "English"
+        },
+        "zh-CN": {
+          "meta.title": "BitNode — 重新定义移动程序化广告。", "meta.desc": "BitNode。重新定义移动程序化广告。",
+          "nav.solutions": "解决方案", "nav.quality": "流量质量", "nav.workflow": "合作流程", "nav.verticals": "行业", "nav.contact": "联系我们",
+          "hero.eyebrow": "了解 BitNode",
+          "hero.title.l1": "移动程序化广告,", "hero.title.l2": "重新定义。",
+          "hero.lead": "为应用广告主、代理商与媒体方打造的一体化平台 —— 透明的流量,实时的优化,可持续叠加的成效。",
+          "hero.cta1": "了解新能力", "hero.cta2": "联系销售",
+          "stats.kicker": "为规模而生", "stats.h1": "经得起检验的数字。", "stats.h2": " 实时,亦然。",
+          "stats.f1": "每天处理的竞价请求总量。", "stats.f2": "端到端竞价响应的中位延迟。",
+          "stats.f3": "覆盖亚太、中东北非、拉美、欧洲与北美。", "stats.f4": "活跃移动库存中的平均无效流量比例。",
+          "show.kicker": "效果", "show.h1": "获取", "show.h2": "留得下的用户。",
+          "show.sub": "每一次竞价都基于真实结果评估 —— 而非仅仅点击。效果竞价、素材级报表、事件级优化。",
+          "show.t.h": "从竞价到安装,不到 100 毫秒。",
+          "show.t.p1": "BitNode 实时读取活动目标、供给信号与激活后价值,将预算投向最可能回报的瞬间。",
+          "show.t.p2": "iOS、Android、SKAdNetwork、ATT —— 都在平台中妥善处理。",
+          "show.t.cta": "申请演示",
+          "show.dash.label": "实时 ROAS · 24h", "show.dash.label2": "竞价延迟",
+          "show.dash.bids": "每日竞价", "show.dash.cpi": "平均 CPI", "show.dash.d7": "D7 留存",
+          "pub.kicker": "变现", "pub.h": "优质需求,零烦恼。",
+          "pub.p1": "将应用内流量打包给效果买家 —— 涵盖激励、插屏、原生与横幅。守住用户体验,守住真实 eCPM。",
+          "pub.p2": "底价控制、需求来源透明、直接交易与私有市场 —— 集成在一处。",
+          "pub.cta": "接入你的流量",
+          "pub.install": "安装", "pub.chip1": "eCPM 提升", "pub.chip2": "填充率", "pub.chip3": "实时交易", "pub.chip3.n": "142",
+          "sol.kicker": "为每个团队", "sol.h": "一个平台,三种角色,一个结果。",
+          "sol.a.tag": "广告主", "sol.a.h": "买到会留下的用户。", "sol.a.p": "绑定激活、事件与收入结果的效果竞价。iOS、Android、SKAN、MMP —— 全部覆盖。", "sol.a.cta": "了解更多",
+          "sol.p.tag": "媒体方", "sol.p.h": "按你的方式变现。", "sol.p.p": "为优质需求打包应用内库存 —— 多种形式,底价控制,来源透明。", "sol.p.cta": "了解更多",
+          "sol.g.tag": "代理商", "sol.g.h": "自我验证的媒介计划。", "sol.g.p": "跨市场媒介计划、地区控制、节奏治理,以及一份客户真正会读的报表。", "sol.g.cta": "了解更多",
+          "q.kicker": "信任", "q.h1": "规模重要。", "q.h2": " 信任更重要。",
+          "q.sub": "四套安静运转的系统,做着无可替代的工作 —— 来源筛查、异常检测、节奏控制,以及可审计的报表。",
+          "q.a.h": "来源筛查", "q.a.p": "在任何预算接触库存之前,完成供应方与版位级别的审核。",
+          "q.b.h": "异常检测", "q.b.p": "对点击、激活与激活后事件持续监控,将无效流量挡在门外。",
+          "q.c.h": "节奏与控制", "q.c.p": "按活动、市场、供给路径的频次、预算与时段治理。",
+          "q.d.h": "透明的报表", "q.d.p": "每一笔花费,都建立在可审计的数据之上,而不是必须相信的数字。",
+          "wf.kicker": "合作流程", "wf.h": "立项 · 规划 · 上线 · 优化。", "wf.sub": "一种干净的运营节奏 —— 从第一次对话到持续累积的效果。",
+          "wf.s1.h": "立项", "wf.s1.p": "市场、KPI、归因、素材、合规 —— 一次理清。",
+          "wf.s2.h": "规划", "wf.s2.p": "流量来源、竞价策略、预算节奏、衡量规则 —— 上线前规划清楚。",
+          "wf.s3.h": "上线", "wf.s3.p": "上线即具备来源控制、事件追踪、报表与预警。",
+          "wf.s4.h": "优化", "wf.s4.p": "每日复盘,把预算移向更值得的供给、素材与人群。",
+          "v.kicker": "行业", "v.h": "聚焦移动优先的增长品类。",
+          "v.gaming": "游戏", "v.finance": "金融", "v.ecom": "电商", "v.utility": "工具", "v.ent": "娱乐", "v.travel": "出行",
+          "faq.kicker": "常见问题", "faq.h": "你大概想知道。",
+          "faq.q1": "支持第三方归因吗?", "faq.a1": "支持。BitNode 可通过 postback、事件映射与活动标识,与主流移动归因工具对接。",
+          "faq.q2": "提供哪些购买模式?", "faq.a2": "根据市场、供给与 KPI,可灵活采用 CPI、CPA、CPM、CPC 或定制条款。",
+          "faq.q3": "媒体方如何接入流量?", "faq.a3": "可以。我们会评估应用内供给、广告形式、市场覆盖、流量质量与对接方案。",
+          "faq.q4": "BitNode 位于哪里?", "faq.a4": "BitNode 是一家香港公司,服务全球的跨境移动广告需求方与供给方。",
+          "c.kicker": "联系", "c.h": "从一段对话开始。", "c.sub": "提交一份简短需求,BitNode 团队将就合作契合度、市场情况与下一步反馈给你。",
+          "c.name": "姓名", "c.email": "商务邮箱", "c.company": "公司", "c.role": "合作类型",
+          "c.role.opt1": "广告主 / 应用开发者", "c.role.opt2": "媒体方 / 应用所有者", "c.role.opt3": "代理商 / 网络", "c.role.opt4": "技术合作伙伴",
+          "c.brief": "需求说明", "c.brief.ph": "目标市场、KPI、流量类型、月度预算、应用品类或库存详情", "c.submit": "发送合作意向 →",
+          "f.col1": "平台", "f.col2": "合作", "f.col3": "公司", "f.col4": "地区",
+          "f.advertisers": "面向广告主", "f.publishers": "面向媒体方", "f.agencies": "面向代理商", "f.region": "中国香港",
+          "f.copy": "© BitNode Limited 版权所有。", "f.compliance": "隐私 · 条款 · Cookies",
+          "_label": "简体中文"
+        },
+        "zh-TW": {
+          "meta.title": "BitNode — 重新定義行動程序化廣告。", "meta.desc": "BitNode。重新定義行動程序化廣告。",
+          "nav.solutions": "解決方案", "nav.quality": "流量品質", "nav.workflow": "合作流程", "nav.verticals": "產業", "nav.contact": "聯絡我們",
+          "hero.eyebrow": "認識 BitNode",
+          "hero.title.l1": "行動程序化廣告,", "hero.title.l2": "重新定義。",
+          "hero.lead": "為應用廣告主、代理商與媒體方打造的一體化平台 —— 透明的流量、即時的優化,以及持續累積的成效。",
+          "hero.cta1": "了解新能力", "hero.cta2": "聯絡業務",
+          "stats.kicker": "為規模而生", "stats.h1": "經得起檢驗的數字。", "stats.h2": " 即時,亦然。",
+          "stats.f1": "每天處理的競價請求總量。", "stats.f2": "端到端競價回應的中位延遲。",
+          "stats.f3": "涵蓋亞太、中東北非、拉美、歐洲與北美。", "stats.f4": "活躍行動庫存中的平均無效流量比例。",
+          "show.kicker": "效果", "show.h1": "獲取", "show.h2": "留得下的使用者。",
+          "show.sub": "每一次競價都基於真實結果評估 —— 而不只是點擊。效果競價、素材級報表、事件級優化。",
+          "show.t.h": "從競價到安裝,不到 100 毫秒。",
+          "show.t.p1": "BitNode 即時讀取活動目標、供給訊號與啟用後價值,將預算投向最可能回報的瞬間。",
+          "show.t.p2": "iOS、Android、SKAdNetwork、ATT —— 都由平台妥善處理。",
+          "show.t.cta": "申請示範",
+          "show.dash.label": "即時 ROAS · 24h", "show.dash.label2": "競價延遲",
+          "show.dash.bids": "每日競價", "show.dash.cpi": "平均 CPI", "show.dash.d7": "D7 留存",
+          "pub.kicker": "變現", "pub.h": "優質需求,毫不費力。",
+          "pub.p1": "將應用內流量打包給效果買家 —— 獎勵、插頁、原生與橫幅。守住使用者體驗,守住真實 eCPM。",
+          "pub.p2": "底價控制、需求來源透明、直接交易與私有市場 —— 集成在一處。",
+          "pub.cta": "接入你的流量",
+          "pub.install": "安裝", "pub.chip1": "eCPM 提升", "pub.chip2": "填充率", "pub.chip3": "即時交易", "pub.chip3.n": "142",
+          "sol.kicker": "給每個團隊", "sol.h": "一個平台,三種角色,一個結果。",
+          "sol.a.tag": "廣告主", "sol.a.h": "買到會留下的使用者。", "sol.a.p": "綁定啟用、事件與營收的效果競價。iOS、Android、SKAN、MMP —— 全部支援。", "sol.a.cta": "了解更多",
+          "sol.p.tag": "媒體方", "sol.p.h": "用你的方式變現。", "sol.p.p": "為優質需求打包應用內庫存 —— 多種版位、底價控制、來源透明。", "sol.p.cta": "了解更多",
+          "sol.g.tag": "代理商", "sol.g.h": "會自證的媒體計畫。", "sol.g.p": "跨市場媒體計畫、地區控制、節奏治理,以及一份客戶真正會讀的報表。", "sol.g.cta": "了解更多",
+          "q.kicker": "信任", "q.h1": "規模重要。", "q.h2": " 信任更重要。",
+          "q.sub": "四套安靜運轉的系統,做著無可取代的工作 —— 來源篩查、異常偵測、節奏控制,以及可稽核的報表。",
+          "q.a.h": "來源篩查", "q.a.p": "在任何預算接觸庫存之前,完成供應方與版位的審核。",
+          "q.b.h": "異常偵測", "q.b.p": "對點擊、啟用與啟用後事件持續監控,把無效流量擋在門外。",
+          "q.c.h": "節奏與控制", "q.c.p": "依活動、市場、供給路徑進行頻次、預算與時段治理。",
+          "q.d.h": "透明的報表", "q.d.p": "每一筆花費,都建立在可稽核的資料之上 —— 不是必須相信的數字。",
+          "wf.kicker": "合作流程", "wf.h": "立項 · 規劃 · 上線 · 優化。", "wf.sub": "一種乾淨的運營節奏 —— 從第一次對話到持續累積的成效。",
+          "wf.s1.h": "立項", "wf.s1.p": "市場、KPI、歸因、素材、合規 —— 一次釐清。",
+          "wf.s2.h": "規劃", "wf.s2.p": "流量來源、競價策略、預算節奏、衡量規則 —— 上線前先規劃清楚。",
+          "wf.s3.h": "上線", "wf.s3.p": "上線即具備來源控制、事件追蹤、報表與警示。",
+          "wf.s4.h": "優化", "wf.s4.p": "每日檢視,把預算移向更值得的供給、素材與受眾。",
+          "v.kicker": "產業", "v.h": "專注行動優先的成長品類。",
+          "v.gaming": "遊戲", "v.finance": "金融", "v.ecom": "電商", "v.utility": "工具", "v.ent": "娛樂", "v.travel": "旅遊",
+          "faq.kicker": "常見問題", "faq.h": "你大概想知道。",
+          "faq.q1": "支援第三方歸因嗎?", "faq.a1": "支援。BitNode 可透過 postback、事件對應與活動識別,與主流行動歸因工具串接。",
+          "faq.q2": "提供哪些購買模式?", "faq.a2": "依市場、供給與 KPI,可彈性採用 CPI、CPA、CPM、CPC 或客製條款。",
+          "faq.q3": "媒體方如何接入流量?", "faq.a3": "可以。我們會評估應用內供給、廣告形式、市場覆蓋、流量品質與整合方案。",
+          "faq.q4": "BitNode 設立於何處?", "faq.a4": "BitNode 是一家香港公司,服務全球的跨境行動廣告需求方與供給方。",
+          "c.kicker": "聯絡", "c.h": "從一段對話開始。", "c.sub": "提交一份簡短需求,BitNode 團隊將就合作契合度、市場狀況與下一步回覆你。",
+          "c.name": "姓名", "c.email": "商務信箱", "c.company": "公司", "c.role": "合作類型",
+          "c.role.opt1": "廣告主 / 應用開發者", "c.role.opt2": "媒體方 / 應用所有者", "c.role.opt3": "代理商 / 聯播網", "c.role.opt4": "技術夥伴",
+          "c.brief": "需求說明", "c.brief.ph": "目標市場、KPI、流量類型、月預算、應用品類或庫存細節", "c.submit": "送出合作意向 →",
+          "f.col1": "平台", "f.col2": "合作", "f.col3": "公司", "f.col4": "地區",
+          "f.advertisers": "給廣告主", "f.publishers": "給媒體方", "f.agencies": "給代理商", "f.region": "中國香港",
+          "f.copy": "© BitNode Limited 版權所有。", "f.compliance": "隱私 · 條款 · Cookies",
+          "_label": "繁體中文"
+        },
+        "ja": {
+          "meta.title": "BitNode — モバイルプログラマティック、再定義。", "meta.desc": "BitNode。モバイルプログラマティックを、再定義。",
+          "nav.solutions": "ソリューション", "nav.quality": "トラフィック品質", "nav.workflow": "ワークフロー", "nav.verticals": "業界", "nav.contact": "お問い合わせ",
+          "hero.eyebrow": "BitNode をご紹介",
+          "hero.title.l1": "モバイルプログラマティックを、", "hero.title.l2": "再定義する。",
+          "hero.lead": "アプリ広告主・代理店・パブリッシャーのための一体型プラットフォーム。透明なトラフィック、リアルタイム最適化、積み上がる成果のために。",
+          "hero.cta1": "新機能を見る", "hero.cta2": "営業に相談する",
+          "stats.kicker": "スケールに耐える", "stats.h1": "使える数字。", "stats.h2": " リアルタイムでも。",
+          "stats.f1": "1 日に処理する入札リクエスト数。", "stats.f2": "エンドツーエンド入札のメディアン遅延。",
+          "stats.f3": "APAC・MENA・LATAM・欧州・北米をカバー。", "stats.f4": "アクティブなモバイル在庫における平均無効トラフィック率。",
+          "show.kicker": "パフォーマンス", "show.h1": "戻ってくる、", "show.h2": "獲得を。",
+          "show.sub": "すべての入札を本当の成果で評価。クリックだけではなく。パフォーマンス入札、クリエイティブ単位レポート、イベントベース最適化。",
+          "show.t.h": "入札からインストールまで、100ms 未満。",
+          "show.t.p1": "BitNode は目標、供給シグナル、インストール後価値をリアルタイムに読み取り、最も戻りやすい瞬間に予算を投下します。",
+          "show.t.p2": "iOS、Android、SKAdNetwork、ATT — プラットフォーム側で適切に処理。",
+          "show.t.cta": "デモを申し込む",
+          "show.dash.label": "リアルタイム ROAS · 24h", "show.dash.label2": "入札遅延",
+          "show.dash.bids": "入札/日", "show.dash.cpi": "平均 CPI", "show.dash.d7": "D7 リテンション",
+          "pub.kicker": "マネタイズ", "pub.h": "プレミアム需要を、悩みなく。",
+          "pub.p1": "リワード、インタースティシャル、ネイティブ、バナーを通じ、パフォーマンス需要にアプリ内サプライをパッケージ化。UX を保ち、本物の eCPM を守ります。",
+          "pub.p2": "フロア、需要ソース可視化、ダイレクトディール、PMP を一つに。",
+          "pub.cta": "在庫を接続する",
+          "pub.install": "インストール", "pub.chip1": "eCPM 向上", "pub.chip2": "フィル率", "pub.chip3": "ライブ商談", "pub.chip3.n": "142",
+          "sol.kicker": "すべてのチームに", "sol.h": "一つのプラットフォーム、三つの役割、一つの成果。",
+          "sol.a.tag": "広告主向け", "sol.a.h": "残るユーザーを獲得。", "sol.a.p": "インストール・イベント・収益にひもづくパフォーマンス入札。iOS / Android / SKAN / MMP すべて対応。", "sol.a.cta": "詳しく見る",
+          "sol.p.tag": "パブリッシャー向け", "sol.p.h": "あなたの条件でマネタイズ。", "sol.p.p": "プレミアム需要に向け、複数フォーマットでアプリ内在庫をパッケージ化。フロアと透明性を維持。", "sol.p.cta": "詳しく見る",
+          "sol.g.tag": "代理店向け", "sol.g.h": "自走するメディアプラン。", "sol.g.p": "クロスマーケットの計画、地域コントロール、ペーシング、そしてクライアントが読みたくなる一枚のレポート。", "sol.g.cta": "詳しく見る",
+          "q.kicker": "信頼", "q.h1": "規模は大事。", "q.h2": " 信頼はもっと大事。",
+          "q.sub": "4 つの静かなシステムが、効きの大きい仕事をする — ソース審査、アノマリー検知、ペーシング、監査可能なレポート。",
+          "q.a.h": "ソース審査", "q.a.p": "予算が在庫に触れる前に、サプライとプレースメントを審査。",
+          "q.b.h": "アノマリー検知", "q.b.p": "クリック・インストール・ポストイベントを継続的に監視。無効トラフィックを排除。",
+          "q.c.h": "ペーシングと制御", "q.c.p": "キャンペーン・市場・サプライ単位で、頻度・予算・時間帯をガバナンス。",
+          "q.d.h": "透明なレポート", "q.d.p": "すべての支出判断は監査可能なデータに基づきます。信じるしかない数字ではなく。",
+          "wf.kicker": "ワークフロー", "wf.h": "ブリーフ。プラン。ローンチ。最適化。", "wf.sub": "クリーンな運用リズムを、最初の会話から積み上がる成果まで。",
+          "wf.s1.h": "ブリーフ", "wf.s1.p": "市場、KPI、計測、素材、コンプライアンスを一度で整理。",
+          "wf.s2.h": "プラン", "wf.s2.p": "ソース、入札戦略、ペーシング、計測ルールをローンチ前に。",
+          "wf.s3.h": "ローンチ", "wf.s3.p": "ソース管理、計測、レポート、アラートを備えて本番稼働。",
+          "wf.s4.h": "最適化", "wf.s4.p": "日次レビューで、価値あるサプライ・素材・オーディエンスに予算を寄せていきます。",
+          "v.kicker": "業界", "v.h": "モバイルファーストの成長領域。",
+          "v.gaming": "ゲーム", "v.finance": "金融", "v.ecom": "Eコマース", "v.utility": "ユーティリティ", "v.ent": "エンタメ", "v.travel": "旅行",
+          "faq.kicker": "FAQ", "faq.h": "知っておくと便利。",
+          "faq.q1": "サードパーティ計測に対応していますか?", "faq.a1": "はい。BitNode はポストバック、イベントマッピング、キャンペーン ID を通じて主要 MMP と連携します。",
+          "faq.q2": "どの取引モデルに対応していますか?", "faq.a2": "市場・サプライ・KPI に応じて、CPI / CPA / CPM / CPC、またはカスタム条件で構成可能です。",
+          "faq.q3": "パブリッシャーは在庫を接続できますか?", "faq.a3": "可能です。アプリ内サプライ、フォーマット、市場、品質、統合方法を確認します。",
+          "faq.q4": "BitNode の所在地はどこですか?", "faq.a4": "BitNode は香港の企業で、世界中の越境モバイル広告の需要と供給に対応しています。",
+          "c.kicker": "お問い合わせ", "c.h": "まずは、会話から。", "c.sub": "簡単なブリーフをお寄せください。BitNode チームが適合性、市場状況、次のステップをご連絡します。",
+          "c.name": "お名前", "c.email": "ビジネスメール", "c.company": "会社", "c.role": "パートナー種別",
+          "c.role.opt1": "広告主 / アプリ開発者", "c.role.opt2": "パブリッシャー / アプリ運営者", "c.role.opt3": "代理店 / ネットワーク", "c.role.opt4": "テクノロジーパートナー",
+          "c.brief": "ブリーフ", "c.brief.ph": "市場、KPI、トラフィック種別、月予算、アプリカテゴリ、在庫詳細など", "c.submit": "ブリーフを送信 →",
+          "f.col1": "プラットフォーム", "f.col2": "パートナーシップ", "f.col3": "会社", "f.col4": "地域",
+          "f.advertisers": "広告主向け", "f.publishers": "パブリッシャー向け", "f.agencies": "代理店向け", "f.region": "香港",
+          "f.copy": "© BitNode Limited. All rights reserved.", "f.compliance": "プライバシー · 利用規約 · Cookie",
+          "_label": "日本語"
+        }
+      };
+
+      const STORAGE_KEY = "bitnode.lang";
+      const SUPPORTED = ["en", "zh-CN", "zh-TW", "ja"];
+
+      function detectInitial() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored && SUPPORTED.includes(stored)) return stored;
+        const nav = (navigator.language || "en").toLowerCase();
+        if (nav.startsWith("zh") && (nav.includes("tw") || nav.includes("hk") || nav.includes("hant"))) return "zh-TW";
+        if (nav.startsWith("zh")) return "zh-CN";
+        if (nav.startsWith("ja")) return "ja";
+        return "en";
+      }
+
+      function applyLang(lang) {
+        const dict = I18N[lang] || I18N.en;
+        document.documentElement.lang = lang;
+        document.querySelectorAll("[data-i18n]").forEach(el => {
+          const k = el.getAttribute("data-i18n");
+          if (dict[k] != null) el.textContent = dict[k];
+        });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+          const k = el.getAttribute("data-i18n-placeholder");
+          if (dict[k] != null) el.setAttribute("placeholder", dict[k]);
+        });
+        const t = document.querySelector("title[data-i18n]");
+        if (t) t.textContent = dict[t.getAttribute("data-i18n")] || t.textContent;
+        const d = document.querySelector('meta[name="description"][data-i18n]');
+        if (d) d.setAttribute("content", dict[d.getAttribute("data-i18n")] || d.getAttribute("content"));
+        document.getElementById("langCurrent").textContent = dict._label;
+        document.querySelectorAll("#langMenu button").forEach(b => {
+          b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+        });
+        localStorage.setItem(STORAGE_KEY, lang);
+      }
+
+      const langBtn = document.getElementById("langBtn");
+      const langMenu = document.getElementById("langMenu");
+      langBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        const open = langMenu.classList.toggle("open");
+        langBtn.setAttribute("aria-expanded", open);
+      });
+      document.addEventListener("click", () => {
+        langMenu.classList.remove("open");
+        langBtn.setAttribute("aria-expanded", "false");
+      });
+      langMenu.addEventListener("click", e => {
+        const b = e.target.closest("button[data-lang]");
+        if (!b) return;
+        applyLang(b.getAttribute("data-lang"));
+        langMenu.classList.remove("open");
+        langBtn.setAttribute("aria-expanded", "false");
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      const form = document.getElementById("leadForm");
+      form.addEventListener("submit", e => {
+        e.preventDefault();
+        const d = new FormData(form);
+        const lines = [
+          `Name: ${d.get("name") || ""}`,
+          `Email: ${d.get("email") || ""}`,
+          `Company: ${d.get("company") || ""}`,
+          `Partnership: ${d.get("role") || ""}`,
+          "",
+          "Brief:",
+          d.get("message") || ""
+        ];
+        const subject = encodeURIComponent(`Partnership brief from ${d.get("company") || "website lead"}`);
+        const body = encodeURIComponent(lines.join("\n"));
+        window.location.href = `mailto:partnerships@bitnode.hk?subject=${subject}&body=${body}`;
+      });
+
+      applyLang(detectInitial());
+    })();
+  </script>
+</body>
+
+</html>

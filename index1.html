@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BitNode is a Hong Kong mobile programmatic advertising platform helping app advertisers and publishers grow with transparent traffic, real-time optimization, and fraud-aware supply.">
+  <title>BitNode | Mobile Programmatic Advertising Platform</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172026;
+      --muted: #63717d;
+      --paper: #f7f8f5;
+      --white: #ffffff;
+      --line: #d9dfdc;
+      --navy: #0d2538;
+      --teal: #0f766e;
+      --mint: #d6f3e9;
+      --coral: #ff6b4a;
+      --gold: #f5b84b;
+      --blue: #2f6fed;
+      --shadow: 0 18px 60px rgba(13, 37, 56, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(217, 223, 220, 0.78);
+      background: rgba(247, 248, 245, 0.9);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      width: min(1180px, calc(100% - 32px));
+      min-height: 72px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 850;
+      color: var(--navy);
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      padding: 6px;
+      border-radius: 8px;
+      background: var(--navy);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+
+    .brand-mark span {
+      border-radius: 3px;
+      background: var(--mint);
+    }
+
+    .brand-mark span:nth-child(2) {
+      background: var(--coral);
+    }
+
+    .brand-mark span:nth-child(3) {
+      background: var(--gold);
+    }
+
+    .brand-mark span:nth-child(4) {
+      background: #7dd3fc;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: #40505b;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover {
+      color: var(--teal);
+    }
+
+    .nav-cta,
+    .button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 0;
+      border-radius: 8px;
+      padding: 0 18px;
+      background: var(--navy);
+      color: var(--white);
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 150ms ease, background 150ms ease, box-shadow 150ms ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover,
+    .button:hover {
+      transform: translateY(-1px);
+      background: #12334d;
+      box-shadow: 0 12px 28px rgba(13, 37, 56, 0.16);
+    }
+
+    .button.secondary {
+      border: 1px solid rgba(13, 37, 56, 0.16);
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--navy);
+      box-shadow: none;
+    }
+
+    .button.secondary:hover {
+      background: var(--white);
+    }
+
+    .hero {
+      display: grid;
+      align-items: center;
+      padding: 54px 0 30px;
+      background:
+        linear-gradient(115deg, rgba(214, 243, 233, 0.72), transparent 38%),
+        linear-gradient(180deg, #f7f8f5 0%, #eef3ef 100%);
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 0.98fr) minmax(420px, 1.02fr);
+      gap: 54px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      margin: 0 0 22px;
+      padding: 8px 11px;
+      border: 1px solid rgba(15, 118, 110, 0.22);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin-bottom: 22px;
+      color: var(--navy);
+      font-size: clamp(44px, 5.6vw, 76px);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 640px;
+      margin-bottom: 28px;
+      color: #44545e;
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .hero-proof {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 650px;
+    }
+
+    .proof-item {
+      min-height: 94px;
+      padding: 16px;
+      border-left: 3px solid var(--teal);
+      background: rgba(255, 255, 255, 0.64);
+    }
+
+    .proof-item strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .proof-item span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 480px;
+      display: grid;
+      align-items: center;
+    }
+
+    .network-field {
+      position: absolute;
+      inset: -70px -70px -50px 30px;
+      opacity: 0.55;
+      background-image:
+        linear-gradient(rgba(13, 37, 56, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(13, 37, 56, 0.08) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at 50% 50%, black, transparent 72%);
+    }
+
+    .dashboard {
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(13, 37, 56, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .dash-top {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 18px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfa;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .window-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--coral);
+    }
+
+    .window-dots span:nth-child(2) {
+      background: var(--gold);
+    }
+
+    .window-dots span:nth-child(3) {
+      background: var(--teal);
+    }
+
+    .status-pill {
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: var(--mint);
+      color: #075b54;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .dash-body {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 18px;
+      padding: 20px;
+    }
+
+    .bid-stream,
+    .device-map,
+    .supply-panel {
+      border: 1px solid rgba(13, 37, 56, 0.1);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .bid-stream {
+      padding: 14px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .stream-row {
+      display: grid;
+      grid-template-columns: 72px 1fr 52px;
+      align-items: center;
+      gap: 9px;
+      min-height: 36px;
+      color: #52616b;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .stream-row .bar {
+      height: 9px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, var(--teal), #62c5a5);
+    }
+
+    .stream-row:nth-child(2) .bar {
+      width: 74%;
+      background: linear-gradient(90deg, var(--blue), #7dd3fc);
+    }
+
+    .stream-row:nth-child(3) .bar {
+      width: 66%;
+      background: linear-gradient(90deg, var(--gold), #ffd98c);
+    }
+
+    .stream-row:nth-child(4) .bar {
+      width: 82%;
+    }
+
+    .stream-row:nth-child(5) .bar {
+      width: 58%;
+      background: linear-gradient(90deg, var(--coral), #ffb199);
+    }
+
+    .device-map {
+      min-height: 268px;
+      position: relative;
+      padding: 18px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(15, 118, 110, 0.12), transparent 42%),
+        #ffffff;
+    }
+
+    .phone {
+      position: absolute;
+      right: 30px;
+      bottom: 24px;
+      width: 150px;
+      height: 248px;
+      border: 9px solid var(--navy);
+      border-radius: 28px;
+      background: #f4f8f6;
+      box-shadow: 0 22px 38px rgba(13, 37, 56, 0.18);
+      overflow: hidden;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      width: 54px;
+      height: 5px;
+      border-radius: 8px;
+      background: #213b50;
+      transform: translateX(-50%);
+    }
+
+    .ad-card {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 12px 28px rgba(13, 37, 56, 0.14);
+    }
+
+    .ad-card div {
+      height: 8px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      background: var(--line);
+    }
+
+    .ad-card div:first-child {
+      width: 72%;
+      background: var(--teal);
+    }
+
+    .node {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 0 0 0 8px rgba(255, 107, 74, 0.12);
+    }
+
+    .node.one {
+      left: 32px;
+      top: 68px;
+    }
+
+    .node.two {
+      left: 135px;
+      top: 128px;
+      background: var(--teal);
+      box-shadow: 0 0 0 8px rgba(15, 118, 110, 0.12);
+    }
+
+    .node.three {
+      left: 72px;
+      bottom: 48px;
+      background: var(--gold);
+      box-shadow: 0 0 0 8px rgba(245, 184, 75, 0.14);
+    }
+
+    .map-line {
+      position: absolute;
+      left: 44px;
+      top: 80px;
+      width: 176px;
+      height: 116px;
+      border-top: 2px solid rgba(15, 118, 110, 0.28);
+      border-right: 2px solid rgba(15, 118, 110, 0.28);
+      transform: rotate(8deg);
+    }
+
+    .supply-panel {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+      overflow: hidden;
+    }
+
+    .supply-item {
+      min-height: 86px;
+      padding: 14px;
+      background: var(--white);
+    }
+
+    .supply-item small {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .supply-item b {
+      color: var(--navy);
+      font-size: 20px;
+    }
+
+    section {
+      padding: 88px 0;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .section-head {
+      max-width: 730px;
+      margin-bottom: 36px;
+    }
+
+    .section-kicker {
+      margin-bottom: 10px;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin-bottom: 14px;
+      color: var(--navy);
+      font-size: clamp(34px, 4vw, 56px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .section-head p,
+    .wide-copy {
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .logo-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 36px;
+    }
+
+    .logo-token {
+      min-height: 76px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.62);
+      color: #697782;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .solutions {
+      background: #ffffff;
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .solution-card {
+      min-height: 280px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+
+    .icon-box {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background: var(--mint);
+      color: var(--teal);
+      font-weight: 950;
+    }
+
+    .solution-card:nth-child(2) .icon-box {
+      background: #e9efff;
+      color: var(--blue);
+    }
+
+    .solution-card:nth-child(3) .icon-box {
+      background: #fff0db;
+      color: #a45b00;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .solution-card p,
+    .process-card p,
+    .faq-item p {
+      color: var(--muted);
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 10px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+      color: #3f4d57;
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .feature-list li {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+    }
+
+    .feature-list li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      margin-top: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .trust {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .trust h2,
+    .trust h3 {
+      color: var(--white);
+    }
+
+    .trust .section-head p,
+    .trust .wide-copy {
+      color: #b9c6cf;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .quality-panel {
+      min-height: 380px;
+      padding: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(15, 118, 110, 0.28), transparent),
+        #12334d;
+    }
+
+    .quality-matrix {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .matrix-item {
+      min-height: 118px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .matrix-item b {
+      display: block;
+      margin-bottom: 8px;
+      color: #d6f3e9;
+      font-size: 22px;
+    }
+
+    .matrix-item span {
+      color: #c8d3da;
+      font-size: 14px;
+    }
+
+    .metrics-panel {
+      display: grid;
+      gap: 12px;
+    }
+
+    .metric-card {
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .metric-card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--mint);
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .metric-card span {
+      color: #c8d3da;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      counter-reset: step;
+    }
+
+    .process-card {
+      min-height: 220px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.74);
+      counter-increment: step;
+    }
+
+    .process-card::before {
+      content: "0" counter(step);
+      display: block;
+      margin-bottom: 24px;
+      color: var(--coral);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .industries {
+      background: #eef3ef;
+    }
+
+    .industry-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .industry {
+      min-height: 92px;
+      display: flex;
+      align-items: end;
+      padding: 14px;
+      border: 1px solid rgba(13, 37, 56, 0.1);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--navy);
+      font-weight: 850;
+    }
+
+    .contact {
+      background: #ffffff;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.86fr 1.14fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .contact-aside {
+      padding: 26px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .contact-aside h2 {
+      color: var(--white);
+    }
+
+    .contact-aside p {
+      color: #c8d3da;
+    }
+
+    .contact-line {
+      display: grid;
+      gap: 8px;
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .contact-line span {
+      color: #94a8b5;
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .contact-line a,
+    .contact-line b {
+      color: var(--mint);
+      font-size: 18px;
+    }
+
+    .contact-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfa;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      color: #40505b;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #cdd6d2;
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--ink);
+      outline: none;
+    }
+
+    input,
+    select {
+      min-height: 46px;
+      padding: 0 12px;
+    }
+
+    textarea {
+      min-height: 128px;
+      resize: vertical;
+      padding: 12px;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+    }
+
+    .form-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .faq-item {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    footer {
+      padding: 34px 0;
+      border-top: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      font-weight: 750;
+    }
+
+    @media (max-width: 980px) {
+      .nav {
+        min-height: 66px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 48px 0 30px;
+      }
+
+      .hero-inner,
+      .trust-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: auto;
+      }
+
+      .dashboard {
+        max-width: 680px;
+      }
+
+      .solution-grid,
+      .process-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .industry-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-cta {
+        display: none;
+      }
+
+      .hero-proof,
+      .dash-body,
+      .supply-panel,
+      .solution-grid,
+      .process-grid,
+      .quality-matrix,
+      .contact-form,
+      .faq-grid,
+      .logo-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .supply-panel {
+        background: transparent;
+      }
+
+      .hero-actions {
+        display: grid;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .device-map {
+        min-height: 230px;
+      }
+
+      .phone {
+        width: 122px;
+        height: 208px;
+        right: 16px;
+      }
+
+      .industry-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .field.full,
+      .field {
+        grid-column: auto;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="BitNode home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="brand-name">BitNode</span>
+      </a>
+      <div class="nav-links" aria-label="Sections">
+        <a href="#solutions">Solutions</a>
+        <a href="#quality">Quality</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a class="nav-cta" href="#contact">Start a Partnership</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow">Hong Kong based mobile programmatic advertising</p>
+          <h1 id="hero-title">BitNode grows mobile demand with cleaner supply.</h1>
+          <p class="lead">A performance-focused programmatic platform for app advertisers, agencies, and publishers who need transparent mobile traffic, real-time optimization, and practical fraud controls across global markets.</p>
+          <div class="hero-actions">
+            <a class="button" href="#contact">Talk to Sales</a>
+            <a class="button secondary" href="#solutions">Explore Capabilities</a>
+          </div>
+          <div class="hero-proof" aria-label="Platform highlights">
+            <div class="proof-item">
+              <strong>RTB</strong>
+              <span>Real-time bidding and campaign pacing</span>
+            </div>
+            <div class="proof-item">
+              <strong>Mobile</strong>
+              <span>App install, retargeting, and user acquisition</span>
+            </div>
+            <div class="proof-item">
+              <strong>APAC+</strong>
+              <span>Cross-border growth from Hong Kong</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="network-field"></div>
+          <div class="dashboard">
+            <div class="dash-top">
+              <div class="window-dots"><span></span><span></span><span></span></div>
+              <div class="status-pill">Live optimization</div>
+            </div>
+            <div class="dash-body">
+              <div class="bid-stream">
+                <div class="stream-row"><span>Bidstream</span><span class="bar"></span><span>94%</span></div>
+                <div class="stream-row"><span>iOS</span><span class="bar"></span><span>76%</span></div>
+                <div class="stream-row"><span>Android</span><span class="bar"></span><span>68%</span></div>
+                <div class="stream-row"><span>Rewarded</span><span class="bar"></span><span>82%</span></div>
+                <div class="stream-row"><span>Native</span><span class="bar"></span><span>61%</span></div>
+              </div>
+              <div class="device-map">
+                <div class="map-line"></div>
+                <span class="node one"></span>
+                <span class="node two"></span>
+                <span class="node three"></span>
+                <div class="phone">
+                  <div class="ad-card">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="supply-panel">
+                <div class="supply-item"><small>Traffic</small><b>In-app</b></div>
+                <div class="supply-item"><small>Formats</small><b>Video</b></div>
+                <div class="supply-item"><small>Signals</small><b>Context</b></div>
+                <div class="supply-item"><small>Buying</small><b>OpenRTB</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="partners-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">Built for commercial teams</p>
+          <h2 id="partners-title">One platform for demand, supply, and mobile growth operations.</h2>
+          <p>BitNode connects campaign objectives with quality mobile inventory, giving teams the control they need to scale without losing sight of traffic source, cost, and post-install value.</p>
+        </div>
+        <div class="logo-strip" aria-label="Supported buying and monetization categories">
+          <div class="logo-token">DSP</div>
+          <div class="logo-token">SSP</div>
+          <div class="logo-token">MMP</div>
+          <div class="logo-token">SDK</div>
+          <div class="logo-token">OpenRTB</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="solutions" id="solutions" aria-labelledby="solutions-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">Solutions</p>
+          <h2 id="solutions-title">Programmatic capabilities that match how mobile teams buy and monetize.</h2>
+        </div>
+        <div class="solution-grid">
+          <article class="solution-card">
+            <div class="icon-box">A</div>
+            <h3>For Advertisers</h3>
+            <p>Acquire users across mobile apps with performance bidding, creative-level reporting, and event-based optimization.</p>
+            <ul class="feature-list">
+              <li>App install and in-app event campaigns</li>
+              <li>ROAS, CPA, CPI, and retention optimization</li>
+              <li>MMP-compatible attribution workflows</li>
+            </ul>
+          </article>
+          <article class="solution-card">
+            <div class="icon-box">P</div>
+            <h3>For Publishers</h3>
+            <p>Package in-app supply for demand partners while protecting user experience and monetization quality.</p>
+            <ul class="feature-list">
+              <li>Rewarded video, interstitial, native, and banner</li>
+              <li>Floor control and demand source visibility</li>
+              <li>Direct deal and private marketplace support</li>
+            </ul>
+          </article>
+          <article class="solution-card">
+            <div class="icon-box">D</div>
+            <h3>For Agencies</h3>
+            <p>Run multi-market mobile media plans with clear pacing, regional controls, and measurable campaign outcomes.</p>
+            <ul class="feature-list">
+              <li>Geo, device, OS, carrier, and contextual targeting</li>
+              <li>Campaign pacing and budget governance</li>
+              <li>Consolidated reporting for client teams</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust" id="quality" aria-labelledby="quality-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">Traffic quality</p>
+          <h2 id="quality-title">Scale is useful only when the traffic can be trusted.</h2>
+          <p>BitNode is designed for teams that care about clean supply paths, optimization feedback loops, and practical controls against invalid activity.</p>
+        </div>
+        <div class="trust-grid">
+          <div class="quality-panel">
+            <h3>Quality layers for mobile media buying</h3>
+            <p class="wide-copy">We combine source screening, campaign monitoring, placement review, and conversion feedback to help buyers spend into inventory that can actually move business metrics.</p>
+            <div class="quality-matrix">
+              <div class="matrix-item">
+                <b>01</b>
+                <span>Supply source onboarding and placement review</span>
+              </div>
+              <div class="matrix-item">
+                <b>02</b>
+                <span>Traffic anomaly checks across clicks, installs, and events</span>
+              </div>
+              <div class="matrix-item">
+                <b>03</b>
+                <span>Frequency, pacing, and budget controls by campaign</span>
+              </div>
+              <div class="matrix-item">
+                <b>04</b>
+                <span>Transparent reporting for optimization decisions</span>
+              </div>
+            </div>
+          </div>
+          <div class="metrics-panel">
+            <div class="metric-card">
+              <strong>24/7</strong>
+              <span>Campaign monitoring and delivery visibility</span>
+            </div>
+            <div class="metric-card">
+              <strong>Real-time</strong>
+              <span>Bid, impression, click, install, and postback signals</span>
+            </div>
+            <div class="metric-card">
+              <strong>Global</strong>
+              <span>Traffic access for APAC, MENA, LATAM, Europe, and North America</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow" aria-labelledby="workflow-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">Workflow</p>
+          <h2 id="workflow-title">From briefing to live campaigns in a clean operating rhythm.</h2>
+        </div>
+        <div class="process-grid">
+          <article class="process-card">
+            <h3>Brief</h3>
+            <p>Share target markets, KPIs, attribution setup, creative assets, and compliance requirements.</p>
+          </article>
+          <article class="process-card">
+            <h3>Plan</h3>
+            <p>We map traffic sources, bidding strategy, budget pacing, and measurement rules before launch.</p>
+          </article>
+          <article class="process-card">
+            <h3>Launch</h3>
+            <p>Campaigns go live with source controls, event tracking, reporting views, and alert thresholds.</p>
+          </article>
+          <article class="process-card">
+            <h3>Optimize</h3>
+            <p>Daily optimization reviews shift budget toward supply, creatives, and audiences with stronger value.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="industries" aria-labelledby="industries-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">Verticals</p>
+          <h2 id="industries-title">Focused on mobile-first growth categories.</h2>
+        </div>
+        <div class="industry-grid">
+          <div class="industry">Gaming</div>
+          <div class="industry">Finance</div>
+          <div class="industry">E-commerce</div>
+          <div class="industry">Utilities</div>
+          <div class="industry">Entertainment</div>
+          <div class="industry">Travel</div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">FAQ</p>
+          <h2 id="faq-title">Common partnership questions.</h2>
+        </div>
+        <div class="faq-grid">
+          <article class="faq-item">
+            <h3>Do you support third-party attribution?</h3>
+            <p>Yes. BitNode can work with mainstream mobile measurement workflows through postbacks, event mapping, and campaign identifiers.</p>
+          </article>
+          <article class="faq-item">
+            <h3>Which buying models are available?</h3>
+            <p>Campaigns can be structured around CPI, CPA, CPM, CPC, or custom commercial terms depending on market, supply, and KPI.</p>
+          </article>
+          <article class="faq-item">
+            <h3>Can publishers connect inventory?</h3>
+            <p>Yes. We can review in-app supply, ad formats, market coverage, traffic quality, and integration options for monetization partnerships.</p>
+          </article>
+          <article class="faq-item">
+            <h3>Where is BitNode based?</h3>
+            <p>BitNode is a Hong Kong company serving cross-border mobile advertising demand and supply partners.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact-grid">
+          <aside class="contact-aside">
+            <p class="section-kicker">Contact</p>
+            <h2 id="contact-title">Ready to discuss mobile traffic or supply?</h2>
+            <p>Send a short brief and the BitNode team will follow up with partnership fit, market availability, and next steps.</p>
+            <div class="contact-line">
+              <span>Email</span>
+              <a href="mailto:partnerships@bitnode.hk">partnerships@bitnode.hk</a>
+            </div>
+            <div class="contact-line">
+              <span>Company</span>
+              <b>BitNode Limited, Hong Kong</b>
+            </div>
+          </aside>
+
+          <form class="contact-form" id="leadForm">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="email">Business Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="company">Company</label>
+              <input id="company" name="company" autocomplete="organization" required>
+            </div>
+            <div class="field">
+              <label for="role">Partnership Type</label>
+              <select id="role" name="role">
+                <option>Advertiser / App Developer</option>
+                <option>Publisher / App Owner</option>
+                <option>Agency / Network</option>
+                <option>Technology Partner</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="message">Brief</label>
+              <textarea id="message" name="message" placeholder="Markets, KPI, traffic type, monthly budget, app category, or inventory details"></textarea>
+            </div>
+            <div class="field full">
+              <button class="button" type="submit">Send Partnership Brief</button>
+              <p class="form-note">This static form opens your email client with the submitted details. Connect it to a CRM or form backend before high-volume launch.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> BitNode Limited. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="#solutions">Solutions</a>
+        <a href="#quality">Quality</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const year = document.querySelector("#year");
+    year.textContent = new Date().getFullYear();
+
+    const form = document.querySelector("#leadForm");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const lines = [
+        `Name: ${data.get("name") || ""}`,
+        `Email: ${data.get("email") || ""}`,
+        `Company: ${data.get("company") || ""}`,
+        `Partnership Type: ${data.get("role") || ""}`,
+        "",
+        "Brief:",
+        data.get("message") || ""
+      ];
+      const subject = encodeURIComponent(`Partnership brief from ${data.get("company") || "website lead"}`);
+      const body = encodeURIComponent(lines.join("\n"));
+      window.location.href = `mailto:partnerships@bitnode.hk?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
